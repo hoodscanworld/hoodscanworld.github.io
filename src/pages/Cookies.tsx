@@ -1,240 +1,167 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Cookie, Info, ToggleLeft, Mail, ArrowRight } from 'lucide-react'
+import { Cookie, Shield, BarChart3, Settings, Mail, ArrowRight, ChevronRight } from 'lucide-react'
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-}
-
-const cookieTypes = [
+const SECTIONS = [
   {
-    name: 'Strictly Necessary Cookies',
-    badge: 'Always Active',
-    badgeColor: '#C9F028',
-    description: 'These cookies are required for the HOODSCAN platform to function. They enable core features such as page navigation, session management, and secure authentication. Without these cookies, the services you have requested cannot be provided.',
-    examples: [
-      { name: 'hoodscan_user', purpose: 'Stores your authentication state (wallet address or email session). Cleared on sign-out.', duration: 'Session / Until sign-out' },
-      { name: '__cf_bm', purpose: 'Cloudflare bot management cookie used to distinguish between humans and automated traffic.', duration: '30 minutes' },
+    icon: Cookie,
+    color: '#C9F028',
+    title: 'What are cookies?',
+    body: 'Cookies are small text files stored on your device when you visit a website. HOODSCAN uses a minimal set of cookies strictly necessary for the site to function. We do not use advertising, tracking, or third-party analytics cookies.',
+  },
+  {
+    icon: Shield,
+    color: '#C9F028',
+    title: 'Essential cookies',
+    body: 'These cookies are required for the site to work. They store your authentication session so you stay signed in and your wallet connection is maintained. Without them, the site cannot function.',
+    table: [
+      { name: 'hoodscan_user', purpose: 'Stores your session and wallet connection state', duration: 'Session / localStorage' },
+      { name: '__host_session', purpose: 'CSRF protection and session integrity', duration: 'Session' },
     ],
   },
   {
-    name: 'Functional Cookies',
-    badge: 'Optional',
-    badgeColor: '#7b61ff',
-    description: 'These cookies allow us to remember choices you have made (such as your preferred tab or theme) and provide enhanced, personalized features. The information collected is anonymized and cannot track browsing activity on other websites.',
-    examples: [
-      { name: 'hs_prefs', purpose: 'Remembers your UI preferences such as active dashboard tab and terminal scroll position.', duration: '90 days' },
-    ],
+    icon: BarChart3,
+    color: '#7b61ff',
+    title: 'Analytics cookies',
+    body: 'HOODSCAN does not use analytics cookies. We do not collect browsing data, track your behaviour across sites, or share data with advertising networks.',
+    highlight: { color: '#7b61ff', text: 'Zero analytics tracking.' },
   },
   {
-    name: 'Analytics Cookies',
-    badge: 'Optional',
-    badgeColor: '#00d4ff',
-    description: 'We use privacy-first analytics to understand how visitors interact with HOODSCAN. All data is anonymized and aggregated. No personal identifiers are stored. You can opt out at any time.',
-    examples: [
-      { name: 'hs_session_id', purpose: 'Anonymous session identifier for page-level analytics. Not linked to any account or identity.', duration: '24 hours' },
-    ],
+    icon: Settings,
+    color: '#00d4ff',
+    title: 'Your choices',
+    body: 'Because we only use strictly necessary cookies, there is no opt-out mechanism — removing them would prevent the site from working. You can clear all cookies at any time via your browser settings. Doing so will sign you out of HOODSCAN.',
+  },
+  {
+    icon: Cookie,
+    color: '#C9F028',
+    title: 'Third-party cookies',
+    body: 'HOODSCAN does not embed third-party services that set their own cookies (no Google Analytics, no Facebook Pixel, no advertising SDKs). Our fonts are loaded from Google Fonts, which may set a short-lived cache cookie; we have no control over this but it contains no personal data.',
+  },
+  {
+    icon: Shield,
+    color: '#7b61ff',
+    title: 'Updates to this policy',
+    body: 'We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Changes will be noted by updating the "Last updated" date at the top of this page. Continued use of HOODSCAN after any modification constitutes your acceptance of the updated policy.',
   },
 ]
 
 export default function Cookies() {
   return (
     <div className="min-h-screen pt-16 relative overflow-hidden">
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.02] blur-[120px] pointer-events-none" />
 
-      {/* Hero */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 relative">
-        <motion.div {...fadeUp} transition={{ duration: 0.5 }}>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
           <div className="inline-flex items-center gap-2 glass-green rounded-full px-4 py-1.5 mb-6">
             <Cookie size={13} className="text-[#C9F028]" />
-            <span className="text-xs font-mono text-[#C9F028]">Legal</span>
+            <span className="text-xs font-mono text-[#C9F028]">Cookie Policy</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#f0f0f8] mb-5">Cookie Policy</h1>
-          <p className="text-base text-[#8888a8] leading-relaxed">
-            Last updated: July 30, 2025
+          <h1 className="text-4xl font-bold text-[#f0f0f8] mb-4">How we use cookies</h1>
+          <p className="text-[#8888a8] max-w-lg mx-auto text-sm leading-relaxed">
+            Short version: we use only the cookies that make the site work. No ads, no tracking, no third-party surveillance.
           </p>
+          <div className="mt-5 text-xs text-[#55556a] font-mono">Last updated: July 2025</div>
         </motion.div>
-      </section>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-8">
-        {/* What are cookies */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass rounded-2xl p-7"
+        {/* Quick summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="glass rounded-2xl p-6 border border-[#C9F028]/10 mb-8"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-[#C9F028]/10 flex items-center justify-center">
-              <Info size={17} className="text-[#C9F028]" />
-            </div>
-            <h2 className="text-lg font-bold text-[#f0f0f8]">What are cookies?</h2>
+          <div className="grid sm:grid-cols-3 gap-5 text-center">
+            {[
+              { label: 'Essential only', desc: 'No optional cookies', color: '#C9F028' },
+              { label: 'No tracking', desc: 'Zero analytics', color: '#7b61ff' },
+              { label: 'No ads', desc: 'No advertising networks', color: '#00d4ff' },
+            ].map(item => (
+              <div key={item.label}>
+                <div className="text-base font-bold mb-0.5" style={{ color: item.color }}>{item.label}</div>
+                <div className="text-xs text-[#55556a]">{item.desc}</div>
+              </div>
+            ))}
           </div>
-          <div className="text-sm text-[#8888a8] leading-relaxed space-y-3">
-            <p>
-              Cookies are small text files that are placed on your device when you visit a website. They are widely used to make websites work efficiently and to provide information to the website owner.
-            </p>
-            <p>
-              HOODSCAN uses cookies to remember your authentication state, store UI preferences, and gather anonymized usage analytics. We do not use cookies for advertising, cross-site tracking, or third-party profiling.
-            </p>
-          </div>
-        </motion.section>
+        </motion.div>
 
-        {/* How we use cookies */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-9 h-9 rounded-lg bg-[#7b61ff]/10 flex items-center justify-center">
-              <Cookie size={17} className="text-[#7b61ff]" />
-            </div>
-            <h2 className="text-lg font-bold text-[#f0f0f8]">Cookies we use</h2>
-          </div>
-          <div className="space-y-5">
-            {cookieTypes.map((type, i) => (
-              <motion.div
-                key={type.name}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-                className="glass rounded-xl overflow-hidden"
-              >
-                <div className="p-5 border-b border-white/5">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="font-semibold text-[#f0f0f8] text-sm">{type.name}</h3>
-                    <span
-                      className="text-xs px-2 py-0.5 rounded font-mono flex-shrink-0"
-                      style={{ background: `${type.badgeColor}14`, color: type.badgeColor }}
-                    >
-                      {type.badge}
-                    </span>
-                  </div>
-                  <p className="text-sm text-[#8888a8] leading-relaxed">{type.description}</p>
+        {/* Sections */}
+        <div className="space-y-5">
+          {SECTIONS.map((s, i) => (
+            <motion.section
+              key={s.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+              className="glass rounded-2xl p-7 border border-white/5"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: `${s.color}12` }}>
+                  <s.icon size={17} style={{ color: s.color }} />
                 </div>
-                <div className="overflow-x-auto">
+                <h2 className="text-base font-bold text-[#f0f0f8]">{s.title}</h2>
+              </div>
+              <p className="text-sm text-[#8888a8] leading-relaxed mb-4">{s.body}</p>
+
+              {s.highlight && (
+                <div
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold"
+                  style={{ background: `${s.highlight.color}10`, color: s.highlight.color }}
+                >
+                  <Shield size={14} />
+                  {s.highlight.text}
+                </div>
+              )}
+
+              {s.table && (
+                <div className="overflow-x-auto mt-2">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/2">
-                        <th className="text-left px-5 py-2.5 text-[#55556a] font-medium">Cookie Name</th>
-                        <th className="text-left px-5 py-2.5 text-[#55556a] font-medium">Purpose</th>
-                        <th className="text-left px-5 py-2.5 text-[#55556a] font-medium whitespace-nowrap">Duration</th>
+                      <tr className="border-b border-white/6">
+                        <th className="text-left py-2.5 pr-4 text-[#55556a] uppercase tracking-wider font-medium">Cookie</th>
+                        <th className="text-left py-2.5 pr-4 text-[#55556a] uppercase tracking-wider font-medium">Purpose</th>
+                        <th className="text-left py-2.5 text-[#55556a] uppercase tracking-wider font-medium">Duration</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {type.examples.map(ex => (
-                        <tr key={ex.name} className="border-b border-white/3">
-                          <td className="px-5 py-3 font-mono text-[#C9F028]">{ex.name}</td>
-                          <td className="px-5 py-3 text-[#8888a8] leading-relaxed">{ex.purpose}</td>
-                          <td className="px-5 py-3 text-[#55556a] whitespace-nowrap">{ex.duration}</td>
+                      {s.table.map(row => (
+                        <tr key={row.name} className="border-b border-white/4">
+                          <td className="py-3 pr-4 font-mono text-[#C9F028]">{row.name}</td>
+                          <td className="py-3 pr-4 text-[#8888a8] leading-relaxed">{row.purpose}</td>
+                          <td className="py-3 text-[#55556a]">{row.duration}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Managing cookies */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass rounded-2xl p-7"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-[#00d4ff]/10 flex items-center justify-center">
-              <ToggleLeft size={17} className="text-[#00d4ff]" />
-            </div>
-            <h2 className="text-lg font-bold text-[#f0f0f8]">Managing your cookie preferences</h2>
-          </div>
-          <div className="text-sm text-[#8888a8] leading-relaxed space-y-3">
-            <p>
-              You can control and delete cookies through your browser settings. Most browsers allow you to refuse cookies, delete existing cookies, and set preferences for cookies from specific websites.
-            </p>
-            <p>
-              Note that disabling strictly necessary cookies will prevent HOODSCAN from functioning correctly. Your authentication state is stored in <code className="font-mono text-[#8888a8] bg-white/5 px-1.5 py-0.5 rounded text-xs">localStorage</code> under the key <code className="font-mono text-[#8888a8] bg-white/5 px-1.5 py-0.5 rounded text-xs">hoodscan_user</code>. You can clear this at any time by signing out or clearing your browser's local storage.
-            </p>
-            <div className="mt-4 space-y-2">
-              <p className="font-medium text-[#f0f0f8] text-xs uppercase tracking-wider">Browser cookie settings:</p>
-              {[
-                { browser: 'Chrome', url: 'https://support.google.com/chrome/answer/95647' },
-                { browser: 'Firefox', url: 'https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences' },
-                { browser: 'Safari', url: 'https://support.apple.com/en-gb/guide/safari/sfri11471/mac' },
-                { browser: 'Edge', url: 'https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge' },
-              ].map(b => (
-                <a
-                  key={b.browser}
-                  href={b.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-[#C9F028] hover:underline"
-                >
-                  <ArrowRight size={11} />
-                  Manage cookies in {b.browser}
-                </a>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Third parties */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass rounded-2xl p-7"
-        >
-          <h2 className="text-lg font-bold text-[#f0f0f8] mb-4">Third-party services</h2>
-          <div className="text-sm text-[#8888a8] leading-relaxed space-y-3">
-            <p>
-              HOODSCAN is a static web application hosted on GitHub Pages. We do not embed third-party advertising networks, social media tracking pixels, or behavioral analytics tools.
-            </p>
-            <p>
-              When you connect a MetaMask or Phantom wallet, your wallet extension may store data locally on your device according to its own privacy policy. HOODSCAN only receives your public wallet address and uses it solely for session identification.
-            </p>
-            <p>
-              GitHub Pages may collect server-side access logs (IP addresses, user agents, timestamps) as part of their standard infrastructure operation. This is governed by the{' '}
-              <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" className="text-[#C9F028] hover:underline">
-                GitHub Privacy Statement
-              </a>.
-            </p>
-          </div>
-        </motion.section>
-
-        {/* Updates */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass rounded-2xl p-7"
-        >
-          <h2 className="text-lg font-bold text-[#f0f0f8] mb-4">Updates to this policy</h2>
-          <p className="text-sm text-[#8888a8] leading-relaxed">
-            We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Changes will be noted by updating the "Last updated" date at the top of this page. Continued use of HOODSCAN after any modification constitutes your acceptance of the updated policy.
-          </p>
-        </motion.section>
+              )}
+            </motion.section>
+          ))}
+        </div>
 
         {/* Contact */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-2xl p-7"
+          className="glass rounded-2xl p-7 border border-white/5 mt-5"
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-9 h-9 rounded-lg bg-[#C9F028]/10 flex items-center justify-center">
               <Mail size={17} className="text-[#C9F028]" />
             </div>
-            <h2 className="text-lg font-bold text-[#f0f0f8]">Contact us</h2>
+            <h2 className="text-base font-bold text-[#f0f0f8]">Contact us</h2>
           </div>
-          <p className="text-sm text-[#8888a8] leading-relaxed mb-4">
-            If you have any questions about our use of cookies, please open an issue on GitHub or reach out directly.
+          <p className="text-sm text-[#8888a8] leading-relaxed mb-5">
+            Questions about cookies or our privacy practices? Open an issue on GitHub — we read everything.
           </p>
           <a
             href="https://github.com/hoodscanworld/hoodscanworld.github.io/issues"
@@ -242,14 +169,14 @@ export default function Cookies() {
             rel="noopener noreferrer"
             className="btn-secondary inline-flex items-center gap-2 py-2.5 px-5 text-sm"
           >
-            Open a GitHub Issue
-            <ArrowRight size={14} />
+            Open a GitHub Issue <ArrowRight size={14} />
           </a>
         </motion.section>
 
-        {/* Back nav */}
-        <div className="text-center pt-4">
-          <Link to="/" className="text-sm text-[#55556a] hover:text-[#C9F028] transition-colors">
+        {/* Back */}
+        <div className="text-center pt-8">
+          <Link to="/" className="inline-flex items-center gap-1 text-sm text-[#55556a] hover:text-[#C9F028] transition-colors">
+            <ChevronRight size={14} className="rotate-180" />
             Back to home
           </Link>
         </div>

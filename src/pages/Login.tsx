@@ -1,14 +1,85 @@
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect, useRef } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Eye, EyeOff, AlertCircle, ArrowRight, Wallet, Mail } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, ArrowRight, Wallet, Mail, Shield, Zap } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/Logo'
 
-type LoginTab = 'email' | 'wallet'
+type Tab = 'email' | 'wallet'
+
+/* ─── Floating grid orb animation ──────────────────────────────────────  */
+function LoginBg() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current!
+    const ctx = canvas.getContext('2d')!
+    let w = (canvas.width = canvas.offsetWidth)
+    let h = (canvas.height = canvas.offsetHeight)
+    let raf = 0
+    let t = 0
+
+    const resize = () => { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight }
+    window.addEventListener('resize', resize)
+
+    const ORBS = [
+      { x: 0.3, y: 0.35, r: 280, color: '201,240,40', speed: 0.0004 },
+      { x: 0.7, y: 0.6, r: 220, color: '123,97,255', speed: 0.0006 },
+      { x: 0.5, y: 0.8, r: 180, color: '0,212,255', speed: 0.0005 },
+    ]
+
+    const tick = () => {
+      t++
+      ctx.clearRect(0, 0, w, h)
+      for (const orb of ORBS) {
+        const x = w * orb.x + Math.sin(t * orb.speed) * 60
+        const y = h * orb.y + Math.cos(t * orb.speed * 0.7) * 40
+        const grd = ctx.createRadialGradient(x, y, 0, x, y, orb.r)
+        grd.addColorStop(0, `rgba(${orb.color},0.08)`)
+        grd.addColorStop(1, `rgba(${orb.color},0)`)
+        ctx.fillStyle = grd
+        ctx.fillRect(0, 0, w, h)
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    tick()
+
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+  }, [])
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+}
+
+/* ─── MetaMask icon ─────────────────────────────────────────────────── */
+function MetaMaskIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 35 33" fill="none">
+      <polygon points="32.9582,1 19.8241,10.7183 22.2665,4.99099" fill="#E17726" stroke="#E17726" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="2.04858,1 15.0707,10.809 12.7396,4.99099" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="28.2263,23.5334 24.6498,29.3838 32.2567,31.5162 34.4898,23.6526" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="0.522827,23.6526 2.74357,31.5162 10.3397,29.3838 6.77472,23.5334" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="9.93715,14.5867 7.77186,17.8513 15.1815,18.1885 14.9285,10.2097" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="25.0695,14.5867 20.0541,10.1211 19.9133,18.1885 27.2338,17.8513" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="10.3397,29.3838 14.7227,27.1433 10.9492,23.7119" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+      <polygon points="20.2833,27.1433 24.6498,29.3838 24.0574,23.7119" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+/* ─── Phantom icon ──────────────────────────────────────────────────── */
+function PhantomIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 128 128" fill="none">
+      <rect width="128" height="128" rx="28" fill="#ab9ff2" />
+      <path d="M110.584 64.993c0 29.529-23.956 53.485-53.485 53.485H36.31c-5.77 0-10.45-4.68-10.45-10.45V77.24c0-26.184 21.23-47.413 47.413-47.413 26.184 0 37.31 9.617 37.31 35.166z" fill="white" />
+      <ellipse cx="80" cy="60" rx="7" ry="7" fill="#ab9ff2" />
+      <ellipse cx="50" cy="60" rx="7" ry="7" fill="#ab9ff2" />
+    </svg>
+  )
+}
 
 export default function Login() {
-  const [tab, setTab] = useState<LoginTab>('email')
+  const [tab, setTab] = useState<Tab>('email')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
@@ -25,79 +96,66 @@ export default function Login() {
     try {
       await loginWithEmail(email, password)
       navigate(from, { replace: true })
-    } catch {
-      // error shown via AuthContext
-    } finally {
-      setLoading(null)
-    }
+    } catch { /* shown via AuthContext */ }
+    finally { setLoading(null) }
   }
 
   const handleMetaMask = async () => {
-    clearError()
-    setLoading('metamask')
-    try {
-      await loginWithMetaMask()
-      navigate(from, { replace: true })
-    } catch {
-      // error shown via AuthContext
-    } finally {
-      setLoading(null)
-    }
+    clearError(); setLoading('metamask')
+    try { await loginWithMetaMask(); navigate(from, { replace: true }) }
+    catch { /* shown */ } finally { setLoading(null) }
   }
 
   const handlePhantom = async () => {
-    clearError()
-    setLoading('phantom')
-    try {
-      await loginWithPhantom()
-      navigate(from, { replace: true })
-    } catch {
-      // error shown via AuthContext
-    } finally {
-      setLoading(null)
-    }
+    clearError(); setLoading('phantom')
+    try { await loginWithPhantom(); navigate(from, { replace: true }) }
+    catch { /* shown */ } finally { setLoading(null) }
   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center pt-16 px-4 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 grid-pattern" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#C9F028] opacity-[0.025] blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-[#7b61ff] opacity-[0.03] blur-[80px] pointer-events-none" />
+      <LoginBg />
+      <div className="absolute inset-0 grid-pattern opacity-25 pointer-events-none" />
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="relative z-10 w-full max-w-md"
       >
-        {/* Logo + heading */}
+        {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-5">
             <Logo size="md" linkTo="/" />
           </div>
-          <h1 className="text-2xl font-bold text-[#f0f0f8] mb-2">Welcome back</h1>
+          <h1 className="text-2xl font-bold text-[#f0f0f8] mb-1.5">Welcome back</h1>
           <p className="text-sm text-[#8888a8]">
-            Sign in to access your HOODSCAN dashboard
+            Sign in to access your HOODSCAN command center
           </p>
         </div>
 
         {/* Card */}
-        <div className="glass rounded-2xl p-7 border border-white/8">
+        <div className="glass rounded-2xl p-7 border border-white/8 shadow-2xl">
           {/* Tabs */}
-          <div className="flex rounded-lg p-1 bg-white/4 mb-6">
-            {(['email', 'wallet'] as LoginTab[]).map(t => (
+          <div className="flex rounded-xl p-1 bg-white/4 mb-6">
+            {(['email', 'wallet'] as Tab[]).map(t => (
               <button
                 key={t}
                 onClick={() => { setTab(t); clearError() }}
-                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-md text-sm font-medium transition-all ${
-                  tab === t
-                    ? 'bg-[#111118] text-[#f0f0f8] shadow-sm'
-                    : 'text-[#8888a8] hover:text-[#f0f0f8]'
-                }`}
+                className="flex-1 relative flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all"
+                style={{ color: tab === t ? '#f0f0f8' : '#8888a8' }}
               >
-                {t === 'email' ? <Mail size={15} /> : <Wallet size={15} />}
-                {t === 'email' ? 'Email' : 'Wallet'}
+                {tab === t && (
+                  <motion.div
+                    layoutId="login-tab"
+                    className="absolute inset-0 bg-[#111118] rounded-lg shadow-sm"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  {t === 'email' ? <Mail size={15} /> : <Wallet size={15} />}
+                  {t === 'email' ? 'Email' : 'Wallet'}
+                </span>
               </button>
             ))}
           </div>
@@ -106,13 +164,13 @@ export default function Login() {
           <AnimatePresence>
             {error && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="flex items-start gap-2.5 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3 mb-4"
+                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
+                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                className="flex items-start gap-2.5 bg-red-500/8 border border-red-500/20 rounded-xl px-4 py-3"
               >
-                <AlertCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-red-300 leading-relaxed">{error}</p>
+                <AlertCircle size={15} className="text-red-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-red-400 leading-relaxed">{error}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -120,7 +178,7 @@ export default function Login() {
           <AnimatePresence mode="wait">
             {tab === 'email' ? (
               <motion.form
-                key="email-form"
+                key="email"
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 12 }}
@@ -129,8 +187,8 @@ export default function Login() {
                 className="space-y-4"
               >
                 <div>
-                  <label className="block text-xs font-medium text-[#8888a8] mb-1.5">
-                    Email address
+                  <label className="block text-xs text-[#55556a] mb-1.5 font-medium uppercase tracking-wider">
+                    Email
                   </label>
                   <input
                     type="email"
@@ -143,87 +201,62 @@ export default function Login() {
                   />
                 </div>
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs font-medium text-[#8888a8]">Password</label>
-                    <button
-                      type="button"
-                      className="text-xs text-[#55556a] hover:text-[#C9F028] transition-colors"
-                    >
-                      Forgot password?
-                    </button>
-                  </div>
+                  <label className="block text-xs text-[#55556a] mb-1.5 font-medium uppercase tracking-wider">
+                    Password
+                  </label>
                   <div className="relative">
                     <input
                       type={showPw ? 'text' : 'password'}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       required
-                      placeholder="Minimum 6 characters"
+                      placeholder="••••••••"
                       className="input-field pr-11"
                       autoComplete="current-password"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPw(v => !v)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55556a] hover:text-[#8888a8] transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55556a] hover:text-[#f0f0f8] transition-colors"
                     >
                       {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                     </button>
                   </div>
                 </div>
-                <button
+                <motion.button
                   type="submit"
-                  disabled={loading === 'email'}
-                  className="w-full btn-primary flex items-center justify-center gap-2 py-3 mt-2"
+                  disabled={!!loading}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading === 'email' ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-[#050508]/40 border-t-[#050508] rounded-full spinner" />
-                      Signing in...
-                    </>
+                    <div className="w-4 h-4 border-2 border-[#050508]/40 border-t-[#050508] rounded-full spinner" />
                   ) : (
-                    <>
-                      Sign in
-                      <ArrowRight size={15} />
-                    </>
+                    <>Sign In <ArrowRight size={16} /></>
                   )}
-                </button>
+                </motion.button>
               </motion.form>
             ) : (
               <motion.div
-                key="wallet-form"
+                key="wallet"
                 initial={{ opacity: 0, x: 12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -12 }}
                 transition={{ duration: 0.2 }}
                 className="space-y-3"
               >
-                <p className="text-xs text-[#8888a8] text-center mb-4 leading-relaxed">
-                  Connect your Web3 wallet to authenticate. No password required.
-                </p>
-
                 {/* MetaMask */}
-                <button
+                <motion.button
                   onClick={handleMetaMask}
                   disabled={!!loading}
+                  whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/8 bg-white/2 hover:bg-white/4 hover:border-[#f6851b]/30 transition-all group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-[#f6851b]/10 flex items-center justify-center flex-shrink-0">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M22 2L13.7 8.2l1.5-3.5L22 2z" fill="#e17726" />
-                      <path d="M2 2l8.3 6.2L8.8 4.7 2 2z" fill="#e27625" />
-                      <path d="M19.3 17.2l-2.2 3.4 4.7 1.3 1.3-4.6-3.8-.1z" fill="#e27625" />
-                      <path d="M1 17.3l1.3 4.6 4.7-1.3-2.2-3.4-3.8.1z" fill="#e27625" />
-                      <path d="M6.7 10.7L5.4 12.7l4.7.2-.2-5L6.7 10.7z" fill="#e27625" />
-                      <path d="M17.3 10.7l-3.2-2.8-.1 5 4.7-.2-1.4-2z" fill="#e27625" />
-                      <path d="M7 21.6l2.8-1.4-2.4-1.9L7 21.6z" fill="#e27625" />
-                      <path d="M14.2 20.2l2.8 1.4.4-3.3-2.4 1.9h-.8z" fill="#e27625" />
-                    </svg>
+                  <div className="w-10 h-10 rounded-xl bg-[#f6851b]/10 flex items-center justify-center flex-shrink-0">
+                    <MetaMaskIcon />
                   </div>
                   <div className="flex-1 text-left">
-                    <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#f6851b] transition-colors">
-                      MetaMask
-                    </div>
+                    <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#f6851b] transition-colors">MetaMask</div>
                     <div className="text-xs text-[#55556a]">Ethereum wallet</div>
                   </div>
                   {loading === 'metamask' ? (
@@ -231,26 +264,20 @@ export default function Login() {
                   ) : (
                     <ArrowRight size={15} className="text-[#55556a] group-hover:text-[#f6851b] transition-colors" />
                   )}
-                </button>
+                </motion.button>
 
                 {/* Phantom */}
-                <button
+                <motion.button
                   onClick={handlePhantom}
                   disabled={!!loading}
+                  whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/8 bg-white/2 hover:bg-white/4 hover:border-[#ab9ff2]/30 transition-all group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-[#ab9ff2]/10 flex items-center justify-center flex-shrink-0">
-                    <svg width="20" height="20" viewBox="0 0 128 128" fill="none">
-                      <rect width="128" height="128" rx="28" fill="#ab9ff2" />
-                      <path d="M110.584 64.993c0 29.529-23.956 53.485-53.485 53.485H36.31c-5.77 0-10.45-4.68-10.45-10.45V77.24c0-26.184 21.23-47.413 47.413-47.413 26.184 0 37.31 9.617 37.31 35.166z" fill="white" />
-                      <ellipse cx="80" cy="60" rx="7" ry="7" fill="#ab9ff2" />
-                      <ellipse cx="50" cy="60" rx="7" ry="7" fill="#ab9ff2" />
-                    </svg>
+                  <div className="w-10 h-10 rounded-xl bg-[#ab9ff2]/10 flex items-center justify-center flex-shrink-0">
+                    <PhantomIcon />
                   </div>
                   <div className="flex-1 text-left">
-                    <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#ab9ff2] transition-colors">
-                      Phantom
-                    </div>
+                    <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#ab9ff2] transition-colors">Phantom</div>
                     <div className="text-xs text-[#55556a]">Solana wallet</div>
                   </div>
                   {loading === 'phantom' ? (
@@ -258,24 +285,33 @@ export default function Login() {
                   ) : (
                     <ArrowRight size={15} className="text-[#55556a] group-hover:text-[#ab9ff2] transition-colors" />
                   )}
-                </button>
+                </motion.button>
 
-                <p className="text-[11px] text-[#55556a] text-center mt-3 leading-relaxed px-2">
-                  By connecting, you agree to sign a one-time authentication message. No transaction will be submitted.
+                <p className="text-[11px] text-[#55556a] text-center pt-1 leading-relaxed">
+                  Signing a one-time authentication message. No transaction will be submitted.
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Footer links */}
-        <p className="text-center text-xs text-[#55556a] mt-6">
+        {/* Trust indicators */}
+        <div className="flex items-center justify-center gap-6 mt-5">
+          <div className="flex items-center gap-1.5 text-xs text-[#55556a]">
+            <Shield size={12} className="text-[#C9F028]" /> Non-custodial
+          </div>
+          <div className="flex items-center gap-1.5 text-xs text-[#55556a]">
+            <Zap size={12} className="text-[#C9F028]" /> Instant access
+          </div>
+        </div>
+
+        <p className="text-center text-xs text-[#55556a] mt-4">
           By signing in, you agree to our{' '}
-          <Link to="/cookies" className="text-[#8888a8] hover:text-[#C9F028] transition-colors">
+          <Link to="/cookies" className="text-[#8888a8] hover:text-[#C9F028] transition-colors underline underline-offset-2">
             Cookie Policy
           </Link>
           . New to HOODSCAN?{' '}
-          <Link to="/how-to" className="text-[#8888a8] hover:text-[#C9F028] transition-colors">
+          <Link to="/how-to" className="text-[#8888a8] hover:text-[#C9F028] transition-colors underline underline-offset-2">
             Read the guide
           </Link>
           .
