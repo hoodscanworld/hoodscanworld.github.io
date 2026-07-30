@@ -7,69 +7,84 @@ interface LogoProps {
 
 export default function Logo({ size = 'md', linkTo = '/' }: LogoProps) {
   const sizes = {
-    sm: { icon: 28, text: 'text-lg', gap: 'gap-2' },
-    md: { icon: 36, text: 'text-xl', gap: 'gap-2.5' },
-    lg: { icon: 52, text: 'text-3xl', gap: 'gap-3' },
+    sm: { icon: 30, text: 'text-lg', gap: 'gap-2.5' },
+    md: { icon: 38, text: 'text-xl', gap: 'gap-3' },
+    lg: { icon: 56, text: 'text-3xl', gap: 'gap-3.5' },
   }
   const s = sizes[size]
 
   const inner = (
     <div className={`flex items-center ${s.gap} group`}>
+      {/* Feather icon styled like Robinhood */}
       <div className="relative flex-shrink-0">
         <svg
           width={s.icon}
           height={s.icon}
-          viewBox="0 0 52 52"
+          viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Outer hex ring */}
+          {/* Lime background rounded square */}
+          <rect width="48" height="48" rx="10" fill="#C9F028" />
+          {/* Feather/leaf shape - Robinhood inspired */}
+          {/* Main feather body */}
           <path
-            d="M26 4 L46 15 L46 37 L26 48 L6 37 L6 15 Z"
-            stroke="#00ff94"
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.4"
+            d="M30 6 C30 6 38 12 38 22 C38 30 32 35 26 38 L22 42 L20 40 C20 40 24 36 24 36 C18 33 14 27 14 20 C14 11 22 6 30 6 Z"
+            fill="#050508"
           />
-          {/* Inner hex */}
-          <path
-            d="M26 10 L40 18.5 L40 33.5 L26 42 L12 33.5 L12 18.5 Z"
-            fill="rgba(0,255,148,0.06)"
-            stroke="#00ff94"
-            strokeWidth="1"
+          {/* Feather spine / quill line */}
+          <line
+            x1="26"
+            y1="38"
+            x2="18"
+            y2="8"
+            stroke="#C9F028"
+            strokeWidth="1.5"
+            strokeLinecap="round"
             opacity="0.7"
           />
-          {/* Hood shape */}
+          {/* Feather barbs - left side */}
           <path
-            d="M26 14 C26 14 18 18 18 26 C18 30 20 33 22 35 L30 35 C32 33 34 30 34 26 C34 18 26 14 26 14 Z"
-            fill="rgba(0,255,148,0.12)"
-            stroke="#00ff94"
+            d="M18 22 C21 20 25 20 27 22"
+            stroke="#C9F028"
             strokeWidth="1.2"
+            strokeLinecap="round"
+            opacity="0.6"
+            fill="none"
           />
-          {/* Scan line 1 */}
-          <line x1="19" y1="24" x2="33" y2="24" stroke="#00ff94" strokeWidth="1.5" opacity="0.9" />
-          {/* Scan line 2 */}
-          <line x1="20" y1="28" x2="32" y2="28" stroke="#00ff94" strokeWidth="1" opacity="0.6" />
-          {/* Scan line 3 */}
-          <line x1="22" y1="32" x2="30" y2="32" stroke="#00ff94" strokeWidth="0.75" opacity="0.4" />
-          {/* Center dot */}
-          <circle cx="26" cy="20" r="2" fill="#00ff94" opacity="0.9" />
-          {/* Corner accents */}
-          <circle cx="6" cy="26" r="1.5" fill="#00ff94" opacity="0.5" />
-          <circle cx="46" cy="26" r="1.5" fill="#00ff94" opacity="0.5" />
+          <path
+            d="M17 27 C20 25 24 25 27 27"
+            stroke="#C9F028"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            opacity="0.5"
+            fill="none"
+          />
+          <path
+            d="M19 17 C22 15 26 15 28 17"
+            stroke="#C9F028"
+            strokeWidth="1"
+            strokeLinecap="round"
+            opacity="0.5"
+            fill="none"
+          />
+          {/* Scan dot accent */}
+          <circle cx="32" cy="11" r="2" fill="#C9F028" opacity="0.9" />
         </svg>
-        {/* Glow effect */}
-        <div className="absolute inset-0 rounded-full blur-md bg-[#00ff94] opacity-10 group-hover:opacity-20 transition-opacity" />
+        {/* Subtle glow behind logo */}
+        <div className="absolute inset-0 rounded-xl blur-lg bg-[#C9F028] opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
       </div>
+
+      {/* Wordmark */}
       <div className="flex flex-col leading-none">
         <span
-          className={`font-bold tracking-widest ${s.text} gradient-text-green`}
-          style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '0.12em' }}
+          className={`font-black tracking-tight ${s.text} text-[#C9F028]`}
+          style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.01em' }}
         >
           HOODSCAN
         </span>
         {size !== 'sm' && (
-          <span className="text-[10px] text-[#55556a] tracking-[0.2em] uppercase font-mono mt-0.5">
+          <span className="text-[10px] text-[#55556a] tracking-[0.18em] uppercase font-mono mt-0.5">
             AI Trading Layer
           </span>
         )}

@@ -26,7 +26,7 @@ const features = [
     icon: <Terminal size={22} />,
     title: '50 MCP Tools',
     description: 'Full market access from any MCP-compatible agent. Place orders, read portfolios, scan options chains, stream quotes.',
-    color: '#00ff94',
+    color: '#C9F028',
   },
   {
     icon: <Brain size={22} />,
@@ -44,7 +44,7 @@ const features = [
     icon: <Shield size={22} />,
     title: 'Self-Renewing Sessions',
     description: 'Tokens refresh proactively ahead of expiry and auto-recover on 401. No re-auth interruptions during trading.',
-    color: '#00ff94',
+    color: '#C9F028',
   },
   {
     icon: <Globe size={22} />,
@@ -61,19 +61,19 @@ const features = [
 ]
 
 const integrations = [
-  { name: 'Claude Code', status: 'Native MCP', color: '#00ff94' },
+  { name: 'Claude Code', status: 'Native MCP', color: '#C9F028' },
   { name: 'Codex', status: 'Native MCP', color: '#7b61ff' },
   { name: 'OpenClaw', status: 'Skill + MCP', color: '#00d4ff' },
-  { name: 'Claude Desktop', status: 'MCP Config', color: '#00ff94' },
+  { name: 'Claude Desktop', status: 'MCP Config', color: '#C9F028' },
   { name: 'MetaMask', status: 'Wallet Auth', color: '#f6851b' },
   { name: 'Phantom', status: 'Wallet Auth', color: '#ab9ff2' },
 ]
 
 const terminalLines = [
-  { text: '$ hoodscan login --agent claude-code', color: '#00ff94', delay: 0 },
+  { text: '$ hoodscan login --agent claude-code', color: '#C9F028', delay: 0 },
   { text: '  Authenticating with Robinhood...', color: '#8888a8', delay: 0.4 },
   { text: '  Session stored in OS keychain', color: '#8888a8', delay: 0.8 },
-  { text: '  50 MCP tools registered', color: '#00ff94', delay: 1.2 },
+  { text: '  50 MCP tools registered', color: '#C9F028', delay: 1.2 },
   { text: '', color: '', delay: 1.5 },
   { text: '> robinhood_get_portfolio()', color: '#f0f0f8', delay: 1.8 },
   { text: '  { equity: "$124,832.40", day_pnl: "+$2,341.12" }', color: '#7b61ff', delay: 2.3 },
@@ -88,7 +88,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 grid-pattern opacity-100" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-[#00ff94] opacity-[0.03] blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-[#C9F028] opacity-[0.03] blur-[120px] pointer-events-none" />
         <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.04] blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-[#00d4ff] opacity-[0.03] blur-[80px] pointer-events-none" />
 
@@ -104,8 +104,8 @@ export default function Home() {
               {/* Badge */}
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 mb-6">
                 <div className="flex items-center gap-2 glass-green rounded-full px-4 py-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff94] pulse-dot" />
-                  <span className="text-xs font-mono text-[#00ff94] tracking-wider">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
+                  <span className="text-xs font-mono text-[#C9F028] tracking-wider">
                     MCP v2.0 Live
                   </span>
                 </div>
@@ -155,11 +155,11 @@ export default function Home() {
               <motion.div variants={fadeUp} className="mt-8">
                 <p className="text-xs text-[#55556a] mb-2 font-mono">Quick install:</p>
                 <div className="inline-flex items-center gap-3 glass rounded-lg px-4 py-2.5 font-mono text-sm">
-                  <span className="text-[#00ff94]">$</span>
+                  <span className="text-[#C9F028]">$</span>
                   <span className="text-[#f0f0f8]">npx robinhood-for-agents onboard</span>
                   <button
                     onClick={() => navigator.clipboard?.writeText('npx robinhood-for-agents onboard')}
-                    className="ml-2 text-[#55556a] hover:text-[#00ff94] transition-colors"
+                    className="ml-2 text-[#55556a] hover:text-[#C9F028] transition-colors"
                     title="Copy"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -183,11 +183,11 @@ export default function Home() {
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/2">
                   <div className="w-3 h-3 rounded-full bg-red-500/60" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                  <div className="w-3 h-3 rounded-full bg-[#00ff94]/60" />
+                  <div className="w-3 h-3 rounded-full bg-[#C9F028]/60" />
                   <span className="ml-3 text-xs font-mono text-[#55556a]">hoodscan terminal</span>
                   <div className="ml-auto flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00ff94] pulse-dot" />
-                    <span className="text-xs font-mono text-[#00ff94]">LIVE</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
+                    <span className="text-xs font-mono text-[#C9F028]">LIVE</span>
                   </div>
                 </div>
                 {/* Terminal body */}
@@ -208,14 +208,14 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 3.2 }}
-                    className="cursor-blink text-[#00ff94]"
+                    className="cursor-blink text-[#C9F028]"
                   >
                     _
                   </motion.span>
                 </div>
               </div>
               {/* Glow orb behind terminal */}
-              <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-[#00ff94] opacity-[0.04] blur-3xl" />
+              <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-[#C9F028] opacity-[0.04] blur-3xl" />
             </motion.div>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[#00ff94]/60">{stat.icon}</span>
+                  <span className="text-[#C9F028]/60">{stat.icon}</span>
                   <span className="text-3xl font-bold text-[#f0f0f8] gradient-text-green">
                     {stat.value}
                   </span>
@@ -277,7 +277,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="glass rounded-xl p-6 hover:border-[#00ff94]/20 transition-all duration-300 group"
+                className="glass rounded-xl p-6 hover:border-[#C9F028]/20 transition-all duration-300 group"
               >
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
@@ -362,8 +362,8 @@ export default function Home() {
               >
                 <div className="glass rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-xs text-[#00ff94]/50">{item.step}</span>
-                    <div className="w-8 h-8 rounded-lg bg-[#00ff94]/10 flex items-center justify-center text-[#00ff94]">
+                    <span className="font-mono text-xs text-[#C9F028]/50">{item.step}</span>
+                    <div className="w-8 h-8 rounded-lg bg-[#C9F028]/10 flex items-center justify-center text-[#C9F028]">
                       {item.icon}
                     </div>
                   </div>
@@ -383,7 +383,7 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00ff94]/3 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#C9F028]/3 to-transparent" />
         <div className="absolute inset-0 grid-pattern opacity-50" />
         <motion.div
           initial={{ opacity: 0, y: 24 }}

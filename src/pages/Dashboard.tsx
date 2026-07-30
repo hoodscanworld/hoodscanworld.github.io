@@ -79,7 +79,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen pt-16 pb-12 relative">
       <div className="absolute inset-0 grid-pattern opacity-30" />
-      <div className="absolute top-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[#00ff94] opacity-[0.02] blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[300px] rounded-full bg-[#C9F028] opacity-[0.02] blur-[100px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         {/* Header */}
@@ -90,8 +90,8 @@ export default function Dashboard() {
         >
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-[#00ff94] pulse-dot" />
-              <span className="text-xs font-mono text-[#00ff94]">LIVE SESSION</span>
+              <span className="w-2 h-2 rounded-full bg-[#C9F028] pulse-dot" />
+              <span className="text-xs font-mono text-[#C9F028]">LIVE SESSION</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#f0f0f8]">
               Command Center
@@ -103,7 +103,7 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-3">
             <div className="glass rounded-lg px-3 py-2 flex items-center gap-2">
-              <Shield size={14} className="text-[#00ff94]" />
+              <Shield size={14} className="text-[#C9F028]" />
               <span className="text-xs text-[#8888a8] font-mono">50 tools active</span>
             </div>
             <button
@@ -124,8 +124,8 @@ export default function Dashboard() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
         >
           {[
-            { label: 'Portfolio Value', value: portfolio.equity, icon: <DollarSign size={16} />, color: '#00ff94' },
-            { label: "Today's Gain", value: portfolio.dayPnl, sub: portfolio.dayPct, icon: <TrendingUp size={16} />, color: '#00ff94', up: true },
+            { label: 'Portfolio Value', value: portfolio.equity, icon: <DollarSign size={16} />, color: '#C9F028' },
+            { label: "Today's Gain", value: portfolio.dayPnl, sub: portfolio.dayPct, icon: <TrendingUp size={16} />, color: '#C9F028', up: true },
             { label: 'Total Return', value: portfolio.totalPnl, sub: portfolio.totalPct, icon: <BarChart3 size={16} />, color: '#7b61ff', up: true },
             { label: 'MCP Tool Calls', value: '3,316', sub: 'today', icon: <Activity size={16} />, color: '#00d4ff' },
           ].map((card, i) => (
@@ -142,7 +142,7 @@ export default function Dashboard() {
               </div>
               <div className="text-xl sm:text-2xl font-bold text-[#f0f0f8] font-mono">{card.value}</div>
               {card.sub && (
-                <div className={`text-xs mt-1 font-mono ${card.up ? 'text-[#00ff94]' : 'text-[#55556a]'}`}>
+                <div className={`text-xs mt-1 font-mono ${card.up ? 'text-[#C9F028]' : 'text-[#55556a]'}`}>
                   {card.sub}
                 </div>
               )}
@@ -168,7 +168,7 @@ export default function Dashboard() {
                 onClick={() => setTab(t.id)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium transition-all ${
                   tab === t.id
-                    ? 'bg-[#111118] text-[#00ff94] shadow'
+                    ? 'bg-[#111118] text-[#C9F028] shadow'
                     : 'text-[#55556a] hover:text-[#8888a8]'
                 }`}
               >
@@ -206,8 +206,8 @@ export default function Dashboard() {
                       >
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[#00ff94]/8 flex items-center justify-center">
-                              <span className="text-xs font-bold text-[#00ff94]">{pos.ticker[0]}</span>
+                            <div className="w-8 h-8 rounded-lg bg-[#C9F028]/8 flex items-center justify-center">
+                              <span className="text-xs font-bold text-[#C9F028]">{pos.ticker[0]}</span>
                             </div>
                             <span className="font-semibold text-[#f0f0f8] text-sm font-mono">{pos.ticker}</span>
                           </div>
@@ -216,7 +216,7 @@ export default function Dashboard() {
                         <td className="px-5 py-4 text-right text-sm text-[#8888a8] font-mono hidden sm:table-cell">{pos.price}</td>
                         <td className="px-5 py-4 text-right text-sm font-mono text-[#f0f0f8]">{pos.value}</td>
                         <td className="px-5 py-4 text-right">
-                          <div className={`flex flex-col items-end ${pos.up ? 'text-[#00ff94]' : 'text-red-400'}`}>
+                          <div className={`flex flex-col items-end ${pos.up ? 'text-[#C9F028]' : 'text-red-400'}`}>
                             <span className="text-sm font-mono font-semibold">{pos.pnl}</span>
                             <span className="text-xs opacity-70">{pos.pct}</span>
                           </div>
@@ -237,7 +237,7 @@ export default function Dashboard() {
             >
               <div className="glass rounded-xl p-5">
                 <h3 className="font-semibold text-[#f0f0f8] mb-4 flex items-center gap-2">
-                  <Zap size={16} className="text-[#00ff94]" />
+                  <Zap size={16} className="text-[#C9F028]" />
                   Active MCP Tools
                   <span className="ml-auto text-xs font-mono text-[#55556a]">50 / 50 registered</span>
                 </h3>
@@ -251,12 +251,12 @@ export default function Dashboard() {
                       className="flex items-center justify-between py-2.5 px-3 rounded-lg bg-white/2 hover:bg-white/4 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00ff94] pulse-dot" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
                         <span className="font-mono text-xs sm:text-sm text-[#8888a8]">{tool.name}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <span className="text-xs text-[#55556a] font-mono">{tool.calls.toLocaleString()} calls</span>
-                        <span className="text-xs text-[#00ff94] bg-[#00ff94]/8 px-2 py-0.5 rounded font-mono">READY</span>
+                        <span className="text-xs text-[#C9F028] bg-[#C9F028]/8 px-2 py-0.5 rounded font-mono">READY</span>
                       </div>
                     </motion.div>
                   ))}
@@ -295,7 +295,7 @@ export default function Dashboard() {
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#050508] border border-[#00ff94]/20 rounded-lg p-4 font-mono text-xs text-[#00ff94] whitespace-pre leading-6"
+                    className="bg-[#050508] border border-[#C9F028]/20 rounded-lg p-4 font-mono text-xs text-[#C9F028] whitespace-pre leading-6"
                   >
                     {scanResult}
                   </motion.div>
@@ -313,11 +313,11 @@ export default function Dashboard() {
               <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/5 bg-white/2">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#00ff94]/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#C9F028]/60" />
                 <span className="ml-3 text-xs font-mono text-[#55556a]">hoodscan.agent.log</span>
                 <div className="ml-auto flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff94] pulse-dot" />
-                  <span className="text-xs font-mono text-[#00ff94]">streaming</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
+                  <span className="text-xs font-mono text-[#C9F028]">streaming</span>
                 </div>
               </div>
               <div className="p-5 font-mono text-xs space-y-2 min-h-[280px]">
@@ -332,7 +332,7 @@ export default function Dashboard() {
                     <span className="text-[#55556a] flex-shrink-0">{line.ts}</span>
                     <span className={`flex-shrink-0 uppercase text-[10px] px-1.5 py-0.5 rounded ${
                       line.level === 'exec' ? 'bg-[#7b61ff]/15 text-[#7b61ff]' :
-                      'bg-[#00ff94]/10 text-[#00ff94]'
+                      'bg-[#C9F028]/10 text-[#C9F028]'
                     }`}>
                       {line.level}
                     </span>
@@ -341,7 +341,7 @@ export default function Dashboard() {
                 ))}
                 <div className="flex gap-4 items-center">
                   <span className="text-[#55556a]">14:32:05</span>
-                  <span className="text-[#00ff94] cursor-blink">_</span>
+                  <span className="text-[#C9F028] cursor-blink">_</span>
                 </div>
               </div>
             </motion.div>
@@ -353,7 +353,7 @@ export default function Dashboard() {
           Demo portfolio data shown for illustration only. Connect to a real Robinhood account via{' '}
           <code className="font-mono text-[#8888a8]">npx robinhood-for-agents onboard</code>.{' '}
           <ChevronRight size={11} className="inline" />
-          <a href="https://github.com/hoodscanworld/hoodscanworld.github.io" target="_blank" rel="noopener noreferrer" className="text-[#8888a8] hover:text-[#00ff94] transition-colors">
+          <a href="https://github.com/hoodscanworld/hoodscanworld.github.io" target="_blank" rel="noopener noreferrer" className="text-[#8888a8] hover:text-[#C9F028] transition-colors">
             View on GitHub
           </a>
         </p>

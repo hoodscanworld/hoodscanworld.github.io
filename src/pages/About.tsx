@@ -12,7 +12,7 @@ const values = [
     icon: <Cpu size={20} />,
     title: 'Agent-First Architecture',
     description: 'Every tool, every API, every data structure is designed for programmatic consumption by AI agents. Human interfaces are secondary to machine interfaces.',
-    color: '#00ff94',
+    color: '#C9F028',
   },
   {
     icon: <Shield size={20} />,
@@ -30,7 +30,7 @@ const values = [
     icon: <Zap size={20} />,
     title: 'Zero Friction Uptime',
     description: 'Token refresh happens proactively. 401 recovery is automatic. An agent running HOODSCAN never hits a re-auth wall mid-strategy.',
-    color: '#00ff94',
+    color: '#C9F028',
   },
 ]
 
@@ -51,8 +51,8 @@ export default function About() {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center relative">
         <motion.div {...fadeUp} transition={{ duration: 0.5 }}>
           <div className="inline-flex items-center gap-2 glass-green rounded-full px-4 py-1.5 mb-6">
-            <Users size={13} className="text-[#00ff94]" />
-            <span className="text-xs font-mono text-[#00ff94]">About HOODSCAN</span>
+            <Users size={13} className="text-[#C9F028]" />
+            <span className="text-xs font-mono text-[#C9F028]">About HOODSCAN</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#f0f0f8] mb-6">
             The AI-native trading layer
@@ -71,11 +71,11 @@ export default function About() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-2xl p-8 sm:p-12 border border-[#00ff94]/10"
+          className="glass rounded-2xl p-8 sm:p-12 border border-[#C9F028]/10"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#00ff94]/10 flex items-center justify-center">
-              <Target size={20} className="text-[#00ff94]" />
+            <div className="w-10 h-10 rounded-xl bg-[#C9F028]/10 flex items-center justify-center">
+              <Target size={20} className="text-[#C9F028]" />
             </div>
             <h2 className="text-xl font-bold text-[#f0f0f8]">Our mission</h2>
           </div>
@@ -133,7 +133,7 @@ export default function About() {
           <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f0f8] mb-3">How we got here</h2>
         </motion.div>
         <div className="relative">
-          <div className="absolute left-4 sm:left-[calc(120px+1px)] top-0 bottom-0 w-px bg-gradient-to-b from-[#00ff94]/20 via-[#7b61ff]/20 to-transparent" />
+          <div className="absolute left-4 sm:left-[calc(120px+1px)] top-0 bottom-0 w-px bg-gradient-to-b from-[#C9F028]/20 via-[#7b61ff]/20 to-transparent" />
           <div className="space-y-8">
             {timeline.map((item, i) => (
               <motion.div
@@ -145,13 +145,13 @@ export default function About() {
                 className="flex gap-6 sm:gap-0"
               >
                 <div className="hidden sm:block w-28 text-right pr-8 pt-0.5">
-                  <span className="text-xs font-mono text-[#00ff94]">{item.year}</span>
+                  <span className="text-xs font-mono text-[#C9F028]">{item.year}</span>
                 </div>
                 <div className="relative flex-shrink-0">
-                  <div className="w-2 h-2 rounded-full bg-[#00ff94] mt-1.5 relative z-10 sm:ml-[-1px]" />
+                  <div className="w-2 h-2 rounded-full bg-[#C9F028] mt-1.5 relative z-10 sm:ml-[-1px]" />
                 </div>
                 <div className="flex-1 sm:pl-8 pb-2">
-                  <div className="sm:hidden text-xs font-mono text-[#00ff94] mb-1">{item.year}</div>
+                  <div className="sm:hidden text-xs font-mono text-[#C9F028] mb-1">{item.year}</div>
                   <h3 className="font-semibold text-[#f0f0f8] mb-1.5 text-sm">{item.label}</h3>
                   <p className="text-sm text-[#8888a8] leading-relaxed">{item.desc}</p>
                 </div>

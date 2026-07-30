@@ -21,7 +21,7 @@ function CodeBlock({ code, lang = 'bash' }: { code: string; lang?: string }) {
         <span className="text-xs font-mono text-[#55556a]">{lang}</span>
         <button
           onClick={copy}
-          className="flex items-center gap-1.5 text-xs text-[#55556a] hover:text-[#00ff94] transition-colors"
+          className="flex items-center gap-1.5 text-xs text-[#55556a] hover:text-[#C9F028] transition-colors"
         >
           <Copy size={12} />
           {copied ? 'Copied!' : 'Copy'}
@@ -39,7 +39,7 @@ const sections = [
     id: 'prerequisites',
     icon: <Download size={18} />,
     title: 'Prerequisites',
-    color: '#00ff94',
+    color: '#C9F028',
     content: (
       <div className="space-y-4">
         <p className="text-[#8888a8] text-sm leading-relaxed">
@@ -52,12 +52,12 @@ const sections = [
             { label: 'A Robinhood account', desc: 'Any account type works including free tier', link: 'https://robinhood.com' },
           ].map(item => (
             <div key={item.label} className="flex items-center gap-3 glass rounded-lg px-4 py-3">
-              <CheckCircle size={15} className="text-[#00ff94] flex-shrink-0" />
+              <CheckCircle size={15} className="text-[#C9F028] flex-shrink-0" />
               <div className="flex-1">
                 <span className="font-medium text-[#f0f0f8] text-sm">{item.label}</span>
                 <span className="text-[#55556a] text-xs ml-2">{item.desc}</span>
               </div>
-              <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-[#00ff94] hover:underline font-mono">
+              <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-[#C9F028] hover:underline font-mono">
                 Install
               </a>
             </div>
@@ -89,12 +89,12 @@ const sections = [
           <CodeBlock code={`npx robinhood-for-agents onboard --agent claude-code\nnpx robinhood-for-agents onboard --agent codex\nnpx robinhood-for-agents onboard --agent openclaw`} />
         </div>
         <div className="glass-green rounded-xl p-4">
-          <p className="text-xs font-semibold text-[#00ff94] mb-1">What onboard does</p>
+          <p className="text-xs font-semibold text-[#C9F028] mb-1">What onboard does</p>
           <ul className="text-xs text-[#8888a8] space-y-1.5">
-            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#00ff94] mt-0.5 flex-shrink-0" />Detects your agent and writes the correct MCP server config</li>
-            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#00ff94] mt-0.5 flex-shrink-0" />Installs the unified trading skill (Claude Code and OpenClaw)</li>
-            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#00ff94] mt-0.5 flex-shrink-0" />Opens Chrome for a one-time Robinhood login</li>
-            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#00ff94] mt-0.5 flex-shrink-0" />Stores tokens in your OS keychain (or encrypted file for Docker)</li>
+            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#C9F028] mt-0.5 flex-shrink-0" />Detects your agent and writes the correct MCP server config</li>
+            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#C9F028] mt-0.5 flex-shrink-0" />Installs the unified trading skill (Claude Code and OpenClaw)</li>
+            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#C9F028] mt-0.5 flex-shrink-0" />Opens Chrome for a one-time Robinhood login</li>
+            <li className="flex items-start gap-2"><ChevronRight size={12} className="text-[#C9F028] mt-0.5 flex-shrink-0" />Stores tokens in your OS keychain (or encrypted file for Docker)</li>
           </ul>
         </div>
       </div>
@@ -136,7 +136,7 @@ const sections = [
     id: 'tools',
     icon: <BarChart3 size={18} />,
     title: 'Using the 50 MCP Tools',
-    color: '#00ff94',
+    color: '#C9F028',
     content: (
       <div className="space-y-4">
         <p className="text-[#8888a8] text-sm leading-relaxed">
@@ -152,7 +152,7 @@ const sections = [
             { tool: 'robinhood_get_earnings_calendar()', desc: 'Upcoming earnings dates for watchlist tickers.' },
           ].map(item => (
             <div key={item.tool} className="glass rounded-xl p-4">
-              <code className="text-[#00ff94] text-xs font-mono block mb-1">{item.tool}</code>
+              <code className="text-[#C9F028] text-xs font-mono block mb-1">{item.tool}</code>
               <p className="text-xs text-[#8888a8]">{item.desc}</p>
             </div>
           ))}
@@ -180,7 +180,7 @@ const sections = [
           <CodeBlock lang="yaml" code={`services:\n  agent:\n    image: your-agent-image\n    environment:\n      ROBINHOOD_TOKEN_STORE: file\n      ROBINHOOD_TOKEN_PATH: /run/secrets/rh_tokens\n    secrets:\n      - rh_tokens\n\nsecrets:\n  rh_tokens:\n    file: ./secrets/tokens.enc`} />
         </div>
         <p className="text-xs text-[#55556a] mt-2">
-          See <a href="https://github.com/hoodscanworld/hoodscanworld.github.io" target="_blank" rel="noopener noreferrer" className="text-[#00ff94] hover:underline">docs/DOCKER.md</a> for a full walkthrough including token rotation and health checks.
+          See <a href="https://github.com/hoodscanworld/hoodscanworld.github.io" target="_blank" rel="noopener noreferrer" className="text-[#C9F028] hover:underline">docs/DOCKER.md</a> for a full walkthrough including token rotation and health checks.
         </p>
       </div>
     ),
@@ -193,14 +193,14 @@ export default function HowTo() {
   return (
     <div className="min-h-screen pt-16 relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-30" />
-      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#00ff94] opacity-[0.02] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#C9F028] opacity-[0.02] blur-[100px] pointer-events-none" />
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 relative">
         <motion.div {...fadeUp} transition={{ duration: 0.5 }}>
           <div className="inline-flex items-center gap-2 glass-green rounded-full px-4 py-1.5 mb-6">
-            <Terminal size={13} className="text-[#00ff94]" />
-            <span className="text-xs font-mono text-[#00ff94]">Documentation</span>
+            <Terminal size={13} className="text-[#C9F028]" />
+            <span className="text-xs font-mono text-[#C9F028]">Documentation</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#f0f0f8] mb-5">
             Getting started with
@@ -216,7 +216,7 @@ export default function HowTo() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="text-xs font-mono text-[#8888a8] hover:text-[#00ff94] glass px-3 py-1.5 rounded-lg transition-colors"
+                className="text-xs font-mono text-[#8888a8] hover:text-[#C9F028] glass px-3 py-1.5 rounded-lg transition-colors"
               >
                 {s.title}
               </a>

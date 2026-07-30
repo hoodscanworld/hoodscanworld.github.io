@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { GitFork, Share2, ExternalLink } from 'lucide-react'
+import { GitFork, ExternalLink } from 'lucide-react'
 import Logo from './Logo'
 
 const footerLinks = {
@@ -18,8 +18,7 @@ const footerLinks = {
 }
 
 const socials = [
-  { icon: <GitFork size={18} />, href: 'https://github.com/hoodscanworld', label: 'GitHub' },
-  { icon: <Share2 size={18} />, href: 'https://twitter.com/hoodscan', label: 'Twitter' },
+  { icon: <GitFork size={18} />, href: 'https://github.com/hoodscanworld/hoodscanworld.github.io', label: 'GitHub' },
 ]
 
 export default function Footer() {
@@ -41,7 +40,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-[#55556a] hover:text-[#00ff94] hover:border-[#00ff94]/30 transition-all"
+                  className="w-9 h-9 rounded-lg border border-white/8 flex items-center justify-center text-[#55556a] hover:text-[#C9F028] hover:border-[#C9F028]/30 transition-all"
                 >
                   {s.icon}
                 </a>

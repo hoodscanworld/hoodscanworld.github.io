@@ -62,7 +62,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center pt-16 px-4 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 grid-pattern" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#00ff94] opacity-[0.025] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#C9F028] opacity-[0.025] blur-[100px] pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-[#7b61ff] opacity-[0.03] blur-[80px] pointer-events-none" />
 
       <motion.div
@@ -147,7 +147,7 @@ export default function Login() {
                     <label className="text-xs font-medium text-[#8888a8]">Password</label>
                     <button
                       type="button"
-                      className="text-xs text-[#55556a] hover:text-[#00ff94] transition-colors"
+                      className="text-xs text-[#55556a] hover:text-[#C9F028] transition-colors"
                     >
                       Forgot password?
                     </button>
@@ -271,11 +271,11 @@ export default function Login() {
         {/* Footer links */}
         <p className="text-center text-xs text-[#55556a] mt-6">
           By signing in, you agree to our{' '}
-          <Link to="/cookies" className="text-[#8888a8] hover:text-[#00ff94] transition-colors">
+          <Link to="/cookies" className="text-[#8888a8] hover:text-[#C9F028] transition-colors">
             Cookie Policy
           </Link>
           . New to HOODSCAN?{' '}
-          <Link to="/how-to" className="text-[#8888a8] hover:text-[#00ff94] transition-colors">
+          <Link to="/how-to" className="text-[#8888a8] hover:text-[#C9F028] transition-colors">
             Read the guide
           </Link>
           .

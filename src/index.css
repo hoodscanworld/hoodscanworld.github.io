@@ -6,10 +6,10 @@
   --color-bg-card: #111118;
   --color-bg-card-hover: #16161f;
   --color-border: rgba(255,255,255,0.07);
-  --color-border-glow: rgba(0,255,148,0.25);
-  --color-green: #00ff94;
-  --color-green-dim: #00cc77;
-  --color-green-bg: rgba(0,255,148,0.06);
+  --color-border-glow: rgba(201,240,40,0.25);
+  --color-green: #C9F028;
+  --color-green-dim: #a8cc20;
+  --color-green-bg: rgba(201,240,40,0.06);
   --color-purple: #7b61ff;
   --color-purple-dim: #5b41df;
   --color-cyan: #00d4ff;
@@ -54,19 +54,19 @@ code, pre, .font-mono {
   background: #0d0d14;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,255,148,0.3);
+  background: rgba(201,240,40,0.3);
   border-radius: 3px;
 }
 
 /* Glow utilities */
 .glow-green {
-  box-shadow: 0 0 20px rgba(0,255,148,0.3), 0 0 60px rgba(0,255,148,0.1);
+  box-shadow: 0 0 20px rgba(201,240,40,0.3), 0 0 60px rgba(201,240,40,0.1);
 }
 .glow-purple {
   box-shadow: 0 0 20px rgba(123,97,255,0.3), 0 0 60px rgba(123,97,255,0.1);
 }
 .text-glow-green {
-  text-shadow: 0 0 20px rgba(0,255,148,0.6);
+  text-shadow: 0 0 20px rgba(201,240,40,0.6);
 }
 
 /* Grid noise texture */
@@ -77,8 +77,8 @@ code, pre, .font-mono {
 /* Grid pattern */
 .grid-pattern {
   background-image: 
-    linear-gradient(rgba(0,255,148,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,148,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(201,240,40,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,240,40,0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -91,15 +91,15 @@ code, pre, .font-mono {
 }
 
 .glass-green {
-  background: rgba(0,255,148,0.04);
+  background: rgba(201,240,40,0.04);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0,255,148,0.15);
+  border: 1px solid rgba(201,240,40,0.15);
 }
 
 /* Gradient text */
 .gradient-text-green {
-  background: linear-gradient(135deg, #00ff94 0%, #00d4ff 100%);
+  background: linear-gradient(135deg, #C9F028 0%, #e8ff80 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -164,8 +164,8 @@ code, pre, .font-mono {
 
 /* Neon border */
 .neon-border-green {
-  border: 1px solid #00ff94;
-  box-shadow: 0 0 8px rgba(0,255,148,0.4), inset 0 0 8px rgba(0,255,148,0.05);
+  border: 1px solid #C9F028;
+  box-shadow: 0 0 8px rgba(201,240,40,0.4), inset 0 0 8px rgba(201,240,40,0.05);
 }
 
 .neon-border-purple {
@@ -175,7 +175,7 @@ code, pre, .font-mono {
 
 /* Button variants */
 .btn-primary {
-  background: linear-gradient(135deg, #00ff94, #00cc77);
+  background: linear-gradient(135deg, #C9F028, #a8cc20);
   color: #050508;
   font-weight: 600;
   border-radius: 8px;
@@ -184,24 +184,24 @@ code, pre, .font-mono {
   font-family: 'Space Grotesk', sans-serif;
 }
 .btn-primary:hover {
-  box-shadow: 0 0 30px rgba(0,255,148,0.5);
+  box-shadow: 0 0 30px rgba(201,240,40,0.5);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #00ff94;
+  color: #C9F028;
   font-weight: 600;
-  border: 1px solid rgba(0,255,148,0.4);
+  border: 1px solid rgba(201,240,40,0.4);
   border-radius: 8px;
   padding: 12px 28px;
   transition: all 0.2s;
   font-family: 'Space Grotesk', sans-serif;
 }
 .btn-secondary:hover {
-  background: rgba(0,255,148,0.08);
-  border-color: #00ff94;
-  box-shadow: 0 0 20px rgba(0,255,148,0.2);
+  background: rgba(201,240,40,0.08);
+  border-color: #C9F028;
+  box-shadow: 0 0 20px rgba(201,240,40,0.2);
 }
 
 /* Mobile menu transition */
@@ -228,8 +228,8 @@ code, pre, .font-mono {
 }
 .input-field:focus {
   outline: none;
-  border-color: rgba(0,255,148,0.5);
-  box-shadow: 0 0 0 3px rgba(0,255,148,0.08);
+  border-color: rgba(201,240,40,0.5);
+  box-shadow: 0 0 0 3px rgba(201,240,40,0.08);
 }
 .input-field::placeholder {
   color: #55556a;

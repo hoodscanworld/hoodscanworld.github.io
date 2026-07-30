@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-[#00ff94] border-t-transparent rounded-full spinner" />
+          <div className="w-10 h-10 border-2 border-[#C9F028] border-t-transparent rounded-full spinner" />
           <p className="text-[#8888a8] text-sm font-mono">Initializing secure session...</p>
         </div>
       </div>

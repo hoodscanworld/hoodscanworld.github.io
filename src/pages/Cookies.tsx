@@ -11,7 +11,7 @@ const cookieTypes = [
   {
     name: 'Strictly Necessary Cookies',
     badge: 'Always Active',
-    badgeColor: '#00ff94',
+    badgeColor: '#C9F028',
     description: 'These cookies are required for the HOODSCAN platform to function. They enable core features such as page navigation, session management, and secure authentication. Without these cookies, the services you have requested cannot be provided.',
     examples: [
       { name: 'hoodscan_user', purpose: 'Stores your authentication state (wallet address or email session). Cleared on sign-out.', duration: 'Session / Until sign-out' },
@@ -47,8 +47,8 @@ export default function Cookies() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 relative">
         <motion.div {...fadeUp} transition={{ duration: 0.5 }}>
           <div className="inline-flex items-center gap-2 glass-green rounded-full px-4 py-1.5 mb-6">
-            <Cookie size={13} className="text-[#00ff94]" />
-            <span className="text-xs font-mono text-[#00ff94]">Legal</span>
+            <Cookie size={13} className="text-[#C9F028]" />
+            <span className="text-xs font-mono text-[#C9F028]">Legal</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#f0f0f8] mb-5">Cookie Policy</h1>
           <p className="text-base text-[#8888a8] leading-relaxed">
@@ -66,8 +66,8 @@ export default function Cookies() {
           className="glass rounded-2xl p-7"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-[#00ff94]/10 flex items-center justify-center">
-              <Info size={17} className="text-[#00ff94]" />
+            <div className="w-9 h-9 rounded-lg bg-[#C9F028]/10 flex items-center justify-center">
+              <Info size={17} className="text-[#C9F028]" />
             </div>
             <h2 className="text-lg font-bold text-[#f0f0f8]">What are cookies?</h2>
           </div>
@@ -127,7 +127,7 @@ export default function Cookies() {
                     <tbody>
                       {type.examples.map(ex => (
                         <tr key={ex.name} className="border-b border-white/3">
-                          <td className="px-5 py-3 font-mono text-[#00ff94]">{ex.name}</td>
+                          <td className="px-5 py-3 font-mono text-[#C9F028]">{ex.name}</td>
                           <td className="px-5 py-3 text-[#8888a8] leading-relaxed">{ex.purpose}</td>
                           <td className="px-5 py-3 text-[#55556a] whitespace-nowrap">{ex.duration}</td>
                         </tr>
@@ -173,7 +173,7 @@ export default function Cookies() {
                   href={b.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-[#00ff94] hover:underline"
+                  className="flex items-center gap-2 text-xs text-[#C9F028] hover:underline"
                 >
                   <ArrowRight size={11} />
                   Manage cookies in {b.browser}
@@ -200,7 +200,7 @@ export default function Cookies() {
             </p>
             <p>
               GitHub Pages may collect server-side access logs (IP addresses, user agents, timestamps) as part of their standard infrastructure operation. This is governed by the{' '}
-              <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" className="text-[#00ff94] hover:underline">
+              <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" className="text-[#C9F028] hover:underline">
                 GitHub Privacy Statement
               </a>.
             </p>
@@ -228,8 +228,8 @@ export default function Cookies() {
           className="glass rounded-2xl p-7"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-9 h-9 rounded-lg bg-[#00ff94]/10 flex items-center justify-center">
-              <Mail size={17} className="text-[#00ff94]" />
+            <div className="w-9 h-9 rounded-lg bg-[#C9F028]/10 flex items-center justify-center">
+              <Mail size={17} className="text-[#C9F028]" />
             </div>
             <h2 className="text-lg font-bold text-[#f0f0f8]">Contact us</h2>
           </div>
@@ -249,7 +249,7 @@ export default function Cookies() {
 
         {/* Back nav */}
         <div className="text-center pt-4">
-          <Link to="/" className="text-sm text-[#55556a] hover:text-[#00ff94] transition-colors">
+          <Link to="/" className="text-sm text-[#55556a] hover:text-[#C9F028] transition-colors">
             Back to home
           </Link>
         </div>

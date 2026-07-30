@@ -53,7 +53,7 @@ export default function Navbar() {
                 to={link.to}
                 className={`text-sm font-medium transition-colors ${
                   location.pathname === link.to
-                    ? 'text-[#00ff94]'
+                    ? 'text-[#C9F028]'
                     : 'text-[#8888a8] hover:text-[#f0f0f8]'
                 }`}
               >
@@ -68,7 +68,7 @@ export default function Navbar() {
               <>
                 <Link
                   to="/dashboard"
-                  className="flex items-center gap-2 text-sm text-[#8888a8] hover:text-[#00ff94] transition-colors"
+                  className="flex items-center gap-2 text-sm text-[#8888a8] hover:text-[#C9F028] transition-colors"
                 >
                   <LayoutDashboard size={16} />
                   Dashboard
@@ -123,7 +123,7 @@ export default function Navbar() {
                 to={link.to}
                 className={`block py-3 px-2 text-sm font-medium transition-colors ${
                   location.pathname === link.to
-                    ? 'text-[#00ff94]'
+                    ? 'text-[#C9F028]'
                     : 'text-[#8888a8]'
                 }`}
               >
