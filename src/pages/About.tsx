@@ -32,28 +32,39 @@ const VALUES = [
 
 const TIMELINE = [
   {
-    year: '2024',
-    label: 'Core MCP Server',
-    desc: '50 tools covering equity trading, options, and portfolio management. Pluggable token storage with OS keychain and encrypted file modes.',
+    year: 'Jul 2026',
+    label: 'HOODSCAN v2.0 — Now Live',
+    desc: 'Full interactive web dashboard, wallet-native authentication (MetaMask & Phantom), animated platform upgrade, and 50+ MCP tools fully stable in production.',
     color: '#C9F028',
+    current: true,
   },
   {
-    year: '2025 Q1',
-    label: 'TypeScript Client Library',
-    desc: '70+ async methods expose the full Robinhood API surface to code. Full Zod validation on every response shape.',
+    year: 'Q3 2026',
+    label: 'Mobile Agent SDK',
+    desc: 'iOS and Android native MCP client enabling on-the-go autonomous trading, push alerts for strategy triggers, and biometric session unlock.',
     color: '#7b61ff',
+    current: false,
   },
   {
-    year: '2025 Q2',
-    label: 'Multi-Agent Rollout',
-    desc: 'Native support for Claude Code, Codex, OpenClaw, and generic MCP clients. Unified trading skill for guided workflows.',
+    year: 'Q4 2026',
+    label: 'Options Strategy Builder',
+    desc: 'Visual multi-leg options constructor, real-time backtesting engine, AI-powered Greeks optimization, and automated risk/reward scoring for every leg.',
     color: '#00d4ff',
+    current: false,
   },
   {
-    year: '2025 Q3',
-    label: 'HOODSCAN Rebrand',
-    desc: 'Wallet-native authentication (MetaMask, Phantom), a full web dashboard, and a public-facing demo platform for the next generation of autonomous traders.',
+    year: 'Q1 2027',
+    label: 'DeFi & Cross-Chain',
+    desc: 'Cross-chain swap routing, Solana DEX integration, EVM protocol support, and unified portfolio view across CEX and on-chain positions.',
     color: '#C9F028',
+    current: false,
+  },
+  {
+    year: 'Q2 2027+',
+    label: 'HOODSCAN Pro',
+    desc: 'Multi-account aggregation, institutional-grade risk analytics, white-label API for teams, and an agent marketplace for shared trading strategies.',
+    color: '#7b61ff',
+    current: false,
   },
 ]
 
@@ -173,47 +184,80 @@ export default function About() {
           viewport={{ once: true }}
           className="text-2xl font-bold text-[#f0f0f8] mb-10 text-center"
         >
-          How we got here
+          Roadmap
         </motion.h2>
 
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-[88px] sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#C9F028]/30 via-[#7b61ff]/20 to-transparent" />
+          <div className="absolute left-[88px] sm:left-[100px] top-0 bottom-0 w-px bg-gradient-to-b from-[#C9F028]/40 via-[#7b61ff]/20 to-transparent" />
 
-          <div className="space-y-10">
+          <div className="space-y-8">
             {TIMELINE.map((item, i) => (
               <motion.div
                 key={item.year}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -24 : 24 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="flex items-start gap-6 sm:gap-8"
+                transition={{ delay: i * 0.08, duration: 0.45 }}
+                className="flex items-start gap-6"
               >
-                {/* Year */}
-                <div className="w-20 flex-shrink-0 text-right">
-                  <span className="text-xs font-mono" style={{ color: item.color }}>{item.year}</span>
+                {/* Year column */}
+                <div className="w-20 flex-shrink-0 text-right pt-1">
+                  <span className="text-[11px] font-mono leading-none" style={{ color: item.color }}>
+                    {item.year}
+                  </span>
                 </div>
 
                 {/* Dot */}
-                <div className="relative flex-shrink-0 mt-1">
-                  <div
-                    className="w-3 h-3 rounded-full border-2 relative z-10"
-                    style={{ borderColor: item.color, background: `${item.color}30` }}
-                  />
+                <div className="relative flex-shrink-0 mt-1.5">
+                  {item.current ? (
+                    <>
+                      <div
+                        className="w-3.5 h-3.5 rounded-full relative z-10 pulse-dot"
+                        style={{ background: item.color, boxShadow: `0 0 10px ${item.color}80` }}
+                      />
+                    </>
+                  ) : (
+                    <div
+                      className="w-3 h-3 rounded-full border-2 relative z-10"
+                      style={{ borderColor: item.color, background: `${item.color}20` }}
+                    />
+                  )}
                   <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1.8, opacity: 0 }}
+                    initial={{ scale: 0, opacity: 0.6 }}
+                    whileInView={{ scale: 2.4, opacity: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + 0.2, duration: 0.6 }}
+                    transition={{ delay: i * 0.08 + 0.15, duration: 0.7 }}
                     className="absolute inset-0 rounded-full"
                     style={{ background: item.color }}
                   />
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 glass rounded-xl p-5 border border-white/5">
-                  <h3 className="font-semibold text-[#f0f0f8] mb-1.5">{item.label}</h3>
+                <div
+                  className="flex-1 rounded-xl p-5 border transition-colors"
+                  style={{
+                    background: item.current ? `${item.color}06` : 'rgba(17,17,24,0.8)',
+                    borderColor: item.current ? `${item.color}25` : 'rgba(255,255,255,0.06)',
+                    backdropFilter: 'blur(20px)',
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <h3 className="font-semibold text-[#f0f0f8] text-sm">{item.label}</h3>
+                    {item.current && (
+                      <span
+                        className="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold"
+                        style={{ background: `${item.color}20`, color: item.color }}
+                      >
+                        LIVE NOW
+                      </span>
+                    )}
+                    {!item.current && (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-[#55556a]">
+                        UPCOMING
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-[#8888a8] leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>

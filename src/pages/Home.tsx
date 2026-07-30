@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 
 /* ─── Particle Canvas ─────────────────────────────────────────────────── */
-function ParticleCanvas() {
+function ParticleCanvas({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouse = useRef({ x: -9999, y: -9999 })
 
@@ -36,13 +36,17 @@ function ParticleCanvas() {
     }
     window.addEventListener('resize', resize)
 
+    // Listen on parent section so canvas pointer-events-none doesn't block buttons
+    const section = sectionRef.current
     const onMove = (e: MouseEvent) => {
       const r = canvas.getBoundingClientRect()
       mouse.current = { x: e.clientX - r.left, y: e.clientY - r.top }
     }
     const onLeave = () => { mouse.current = { x: -9999, y: -9999 } }
-    canvas.addEventListener('mousemove', onMove)
-    canvas.addEventListener('mouseleave', onLeave)
+    if (section) {
+      section.addEventListener('mousemove', onMove)
+      section.addEventListener('mouseleave', onLeave)
+    }
 
     const tick = () => {
       ctx.clearRect(0, 0, w, h)
@@ -90,13 +94,17 @@ function ParticleCanvas() {
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
+      if (section) {
+        section.removeEventListener('mousemove', onMove)
+        section.removeEventListener('mouseleave', onLeave)
+      }
     }
-  }, [])
+  }, [sectionRef])
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto"
+      className="absolute inset-0 w-full h-full pointer-events-none"
     />
   )
 }
@@ -241,7 +249,7 @@ const INTEGRATIONS = [
 export default function Home() {
   const words = ['Trade autonomously.', 'Scan options chains.', 'Manage portfolios.', 'Build alpha.']
   const typed = useTypewriter(words)
-  const heroRef = useRef(null)
+  const heroRef = useRef<HTMLElement>(null)
   const { scrollY } = useScroll()
   const heroY = useTransform(scrollY, [0, 600], [0, -80])
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null)
@@ -250,12 +258,13 @@ export default function Home() {
     <div className="relative">
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden" ref={heroRef}>
-        <ParticleCanvas />
+        {/* Canvas is pointer-events-none; mouse events handled on the section */}
+        <ParticleCanvas sectionRef={heroRef} />
         <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full bg-[#C9F028] opacity-[0.022] blur-[160px] pointer-events-none" />
         <div className="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.03] blur-[120px] pointer-events-none" />
 
-        <motion.div style={{ y: heroY }} className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
+        <motion.div style={{ y: heroY }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             {/* Left */}
             <div>
