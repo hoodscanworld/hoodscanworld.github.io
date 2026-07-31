@@ -26,8 +26,11 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Remove lockfile (may contain internal registry URLs)
+        run: rm -f package-lock.json
+
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps --registry https://registry.npmjs.org
 
       - name: Build
         run: npm run build
