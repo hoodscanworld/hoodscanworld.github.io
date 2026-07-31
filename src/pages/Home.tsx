@@ -567,29 +567,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Stats */}
-      <section className="py-14 relative border-y border-white/4">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {STATS.map(({ to, suffix, label, Icon }, i) => (
-              <motion.div key={label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="glass rounded-xl px-5 py-4 border border-white/5 flex items-center gap-4">
-                <div className="w-9 h-9 rounded-lg bg-[#C9F028]/8 flex items-center justify-center flex-shrink-0">
-                  <Icon size={17} className="text-[#C9F028]" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold gradient-text-green font-mono leading-none">
-                    <Counter to={to} suffix={suffix} />
-                  </div>
-                  <div className="text-xs text-[#55556a] mt-0.5">{label}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Product Preview */}
       <section className="py-20 relative">
         <div className="absolute inset-0 grid-pattern opacity-15 pointer-events-none" />
@@ -611,6 +588,29 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
             <ProductPreview />
           </motion.div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-14 relative border-y border-white/4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {STATS.map(({ to, suffix, label, Icon }, i) => (
+              <motion.div key={label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                className="glass rounded-xl px-5 py-4 border border-white/5 flex items-center gap-4">
+                <div className="w-9 h-9 rounded-lg bg-[#C9F028]/8 flex items-center justify-center flex-shrink-0">
+                  <Icon size={17} className="text-[#C9F028]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold gradient-text-green font-mono leading-none">
+                    <Counter to={to} suffix={suffix} />
+                  </div>
+                  <div className="text-xs text-[#55556a] mt-0.5">{label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
