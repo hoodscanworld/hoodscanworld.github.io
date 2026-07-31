@@ -5,9 +5,9 @@ import { useAuth } from '../contexts/AuthContext'
 import Logo from './Logo'
 
 const navLinks = [
-  { label: 'How It Works', to: '/how-to' },
+  { label: 'Features', to: '/features' },
   { label: 'Demo', to: '/demo' },
-  { label: 'FAQ', to: '/faq' },
+  { label: 'How It Works', to: '/how-to' },
   { label: 'About', to: '/about' },
 ]
 

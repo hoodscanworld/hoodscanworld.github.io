@@ -2,9 +2,12 @@ import { Helmet } from 'react-helmet-async'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Zap, Shield, Brain, Terminal, Globe, Lock, TrendingUp, ChevronRight, Cpu } from 'lucide-react'
+import {
+  ArrowRight, Zap, Shield, Terminal, Globe, ChevronRight, Cpu,
+  BarChart3, Activity, RefreshCw, BookOpen, TrendingUp, TrendingDown,
+} from 'lucide-react'
 
-/* ─── Candlestick Chart Background ─────────────────────────────────────
+/* ─── Candlestick Chart Background ──────────────────────────────────────
    A live-scrolling OHLC candlestick chart with EMA line, volume bars,
    a scanning beam and price labels, directly themed to HOODSCAN's
    core purpose: AI-native trading intelligence.
@@ -47,58 +50,46 @@ function CandlestickCanvas() {
 
     // Generate 280 candles; we show a sliding window
     const ALL = genCandles(280)
-    let offset = 0       // first visible candle index (float for smooth scroll)
-    const VISIBLE = 70   // number of candles visible at once
+    let offset = 0
+    const VISIBLE = 70
     const CHART_H = H * 0.72
     const VOL_H = H * 0.12
     const CHART_TOP = H * 0.08
 
-    const resize = () => {
-      W = canvas.width = canvas.offsetWidth
-      H = canvas.height = canvas.offsetHeight
-    }
+    const resize = () => { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight }
     window.addEventListener('resize', resize)
 
-    // Scanner beam state
     let beamX = W * 0.6
     let beamDir = -0.4
 
     const draw = () => {
       t++
-      // Scroll: every 4 frames advance by 0.05 candles
       if (t % 4 === 0) {
         offset = Math.min(offset + 0.05, ALL.length - VISIBLE - 1)
         if (offset >= ALL.length - VISIBLE - 2) offset = 0
       }
 
       ctx.clearRect(0, 0, W, H)
-
       const start = Math.floor(offset)
       const visible = ALL.slice(start, start + VISIBLE)
       if (visible.length < 2) return
 
       const candleW = W / VISIBLE
       const bodyW = Math.max(2, candleW * 0.55)
-
-      // Price range for visible candles
       let minP = Math.min(...visible.map(c => c.low))
       let maxP = Math.max(...visible.map(c => c.high))
       const pad = (maxP - minP) * 0.1
       minP -= pad; maxP += pad
       const priceRange = maxP - minP
-
       const toY = (p: number) => CHART_TOP + (1 - (p - minP) / priceRange) * CHART_H
 
-      // ── Horizontal grid lines ──
       const gridSteps = 5
-      ctx.setLineDash([4, 8])
-      ctx.lineWidth = 0.5
+      ctx.setLineDash([4, 8]); ctx.lineWidth = 0.5
       for (let g = 0; g <= gridSteps; g++) {
         const y = CHART_TOP + (g / gridSteps) * CHART_H
         const price = maxP - (g / gridSteps) * priceRange
         ctx.strokeStyle = 'rgba(255,255,255,0.04)'
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke()
-        // Price label
         ctx.fillStyle = 'rgba(255,255,255,0.12)'
         ctx.font = `10px 'JetBrains Mono', monospace`
         ctx.textAlign = 'right'
@@ -106,111 +97,65 @@ function CandlestickCanvas() {
       }
       ctx.setLineDash([])
 
-      // ── EMA-20 line ──
       const closes = visible.map(c => c.close)
       const emaVals = ema(closes, Math.min(20, closes.length))
-      ctx.beginPath()
-      ctx.strokeStyle = 'rgba(123,97,255,0.35)'
-      ctx.lineWidth = 1.2
-      emaVals.forEach((v, i) => {
-        const x = i * candleW + candleW / 2
-        const y = toY(v)
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-      })
+      ctx.beginPath(); ctx.strokeStyle = 'rgba(123,97,255,0.35)'; ctx.lineWidth = 1.2
+      emaVals.forEach((v, i) => { const x = i * candleW + candleW / 2; const y = toY(v); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y) })
       ctx.stroke()
 
-      // ── EMA-7 line ──
       const ema7 = ema(closes, Math.min(7, closes.length))
-      ctx.beginPath()
-      ctx.strokeStyle = 'rgba(0,212,255,0.25)'
-      ctx.lineWidth = 0.8
-      ema7.forEach((v, i) => {
-        const x = i * candleW + candleW / 2
-        const y = toY(v)
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)
-      })
+      ctx.beginPath(); ctx.strokeStyle = 'rgba(0,212,255,0.25)'; ctx.lineWidth = 0.8
+      ema7.forEach((v, i) => { const x = i * candleW + candleW / 2; const y = toY(v); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y) })
       ctx.stroke()
 
-      // ── Candles ──
       visible.forEach((c, i) => {
         const x = i * candleW + candleW / 2
         const up = c.close >= c.open
         const bodyTop = toY(Math.max(c.open, c.close))
         const bodyBot = toY(Math.min(c.open, c.close))
         const bodyH = Math.max(1, bodyBot - bodyTop)
-        const highY = toY(c.high)
-        const lowY = toY(c.low)
         const col = up ? 'rgba(201,240,40,' : 'rgba(239,68,68,'
-
-        // Wick
-        ctx.strokeStyle = up ? 'rgba(201,240,40,0.45)' : 'rgba(239,68,68,0.38)'
-        ctx.lineWidth = 0.8
-        ctx.beginPath(); ctx.moveTo(x, highY); ctx.lineTo(x, lowY); ctx.stroke()
-
-        // Body
+        ctx.strokeStyle = up ? 'rgba(201,240,40,0.45)' : 'rgba(239,68,68,0.38)'; ctx.lineWidth = 0.8
+        ctx.beginPath(); ctx.moveTo(x, toY(c.high)); ctx.lineTo(x, toY(c.low)); ctx.stroke()
         ctx.fillStyle = up ? col + '0.18)' : col + '0.14)'
-        ctx.strokeStyle = up ? col + '0.55)' : col + '0.45)'
-        ctx.lineWidth = 0.8
+        ctx.strokeStyle = up ? col + '0.55)' : col + '0.45)'; ctx.lineWidth = 0.8
         ctx.fillRect(x - bodyW / 2, bodyTop, bodyW, bodyH)
         ctx.strokeRect(x - bodyW / 2, bodyTop, bodyW, bodyH)
-
-        // Volume bar
         const volBase = CHART_TOP + CHART_H + 8
         const volTop = volBase + (1 - c.vol) * VOL_H
         ctx.fillStyle = up ? 'rgba(201,240,40,0.12)' : 'rgba(239,68,68,0.10)'
         ctx.fillRect(x - bodyW / 2, volTop, bodyW, volBase + VOL_H - volTop)
       })
 
-      // ── Latest candle "forming" blink ──
       const last = visible[visible.length - 1]
       if (last && t % 60 < 40) {
         const x = (VISIBLE - 1) * candleW + candleW / 2
-        ctx.strokeStyle = 'rgba(201,240,40,0.8)'
-        ctx.lineWidth = 1
-        ctx.setLineDash([2, 2])
-        ctx.beginPath()
-        ctx.moveTo(x, toY(last.high))
-        ctx.lineTo(x, toY(last.low))
-        ctx.stroke()
+        ctx.strokeStyle = 'rgba(201,240,40,0.8)'; ctx.lineWidth = 1; ctx.setLineDash([2, 2])
+        ctx.beginPath(); ctx.moveTo(x, toY(last.high)); ctx.lineTo(x, toY(last.low)); ctx.stroke()
         ctx.setLineDash([])
       }
 
-      // ── Scanner beam ──
       beamX += beamDir
       if (beamX < W * 0.05 || beamX > W * 0.95) beamDir *= -1
       const grad = ctx.createLinearGradient(beamX - 40, 0, beamX + 40, 0)
-      grad.addColorStop(0, 'rgba(201,240,40,0)')
-      grad.addColorStop(0.5, 'rgba(201,240,40,0.04)')
-      grad.addColorStop(1, 'rgba(201,240,40,0)')
-      ctx.fillStyle = grad
-      ctx.fillRect(beamX - 40, CHART_TOP, 80, CHART_H + VOL_H + 8)
-      // Beam vertical line
-      ctx.strokeStyle = 'rgba(201,240,40,0.12)'
-      ctx.lineWidth = 1
+      grad.addColorStop(0, 'rgba(201,240,40,0)'); grad.addColorStop(0.5, 'rgba(201,240,40,0.04)'); grad.addColorStop(1, 'rgba(201,240,40,0)')
+      ctx.fillStyle = grad; ctx.fillRect(beamX - 40, CHART_TOP, 80, CHART_H + VOL_H + 8)
+      ctx.strokeStyle = 'rgba(201,240,40,0.12)'; ctx.lineWidth = 1
       ctx.beginPath(); ctx.moveTo(beamX, CHART_TOP); ctx.lineTo(beamX, CHART_TOP + CHART_H); ctx.stroke()
 
-      // ── Ticker label at beam intersection with EMA ──
       const beamIdx = Math.round((beamX / W) * VISIBLE)
       if (beamIdx >= 0 && beamIdx < visible.length) {
         const bCandle = visible[beamIdx]
-        const label = `$${bCandle.close.toFixed(2)}`
-        const ly = toY(bCandle.close) - 12
-        ctx.fillStyle = 'rgba(201,240,40,0.7)'
-        ctx.font = `bold 10px 'JetBrains Mono', monospace`
-        ctx.textAlign = 'left'
-        ctx.fillText(label, beamX + 5, ly)
+        ctx.fillStyle = 'rgba(201,240,40,0.7)'; ctx.font = `bold 10px 'JetBrains Mono', monospace`; ctx.textAlign = 'left'
+        ctx.fillText(`$${bCandle.close.toFixed(2)}`, beamX + 5, toY(bCandle.close) - 12)
       }
 
-      // ── Bottom axis label: "HOODSCAN / DEMO" ──
-      ctx.fillStyle = 'rgba(255,255,255,0.06)'
-      ctx.font = `10px 'JetBrains Mono', monospace`
-      ctx.textAlign = 'left'
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.font = `10px 'JetBrains Mono', monospace`; ctx.textAlign = 'left'
       ctx.fillText('HOODSCAN · DEMO FEED · 1m', 12, CHART_TOP + CHART_H + VOL_H + 18)
 
       raf = requestAnimationFrame(draw)
     }
     draw()
-
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
   }, [])
 
@@ -313,21 +258,214 @@ function TerminalDemo() {
   )
 }
 
-/* ─── Feature cards ────────────────────────────────────────────────────  */
-const FEATURES = [
-  { icon: Terminal, title: '50 MCP Tools', desc: 'Full market access from any MCP-compatible agent. Place orders, scan options chains, stream live quotes, all via typed function calls.', color: '#C9F028' },
-  { icon: Brain, title: 'Multi-Agent Ready', desc: 'Native support for Claude Code, Codex, OpenClaw, and any standard MCP client. One install, every agent, zero re-configuration.', color: '#7b61ff' },
-  { icon: TrendingUp, title: 'Options Intelligence', desc: 'Full options chain scanning, Greeks analysis, and multi-leg order construction. AI-native contract selection with IV and delta filters.', color: '#00d4ff' },
-  { icon: Shield, title: 'Self-Renewing Sessions', desc: 'Tokens refresh proactively before expiry and auto-recover on 401. Your agent never hits a re-auth wall mid-strategy.', color: '#C9F028' },
-  { icon: Globe, title: 'Portfolio Scanner', desc: 'Real-time P&L tracking, position aggregation, FIFO realized gains calculation, and risk exposure summaries across all holdings.', color: '#7b61ff' },
-  { icon: Lock, title: 'Pluggable Token Store', desc: 'OS keychain by default. Encrypted file mode for Docker and headless deployments. Zero credentials in plain text, ever.', color: '#00d4ff' },
+/* ─── Inline Product Preview ────────────────────────────────────────── */
+type ScanSignal = 'BUY' | 'SELL' | 'HOLD' | 'WATCH'
+
+const SCAN_BASE = [
+  { ticker: 'NVDA', price: 891.20, changePct:  2.11, signal: 'BUY'  as ScanSignal },
+  { ticker: 'AAPL', price: 217.40, changePct:  1.21, signal: 'HOLD' as ScanSignal },
+  { ticker: 'PLTR', price:  28.44, changePct:  8.72, signal: 'BUY'  as ScanSignal },
+  { ticker: 'TSLA', price: 237.80, changePct: -3.33, signal: 'WATCH' as ScanSignal },
+  { ticker: 'SMCI', price: 912.40, changePct: 16.53, signal: 'BUY'  as ScanSignal },
+  { ticker: 'INTC', price:  28.14, changePct: -5.82, signal: 'SELL' as ScanSignal },
+  { ticker: 'META', price: 592.10, changePct:  1.09, signal: 'HOLD' as ScanSignal },
+  { ticker: 'AMD',  price: 178.40, changePct: -1.71, signal: 'WATCH' as ScanSignal },
 ]
 
+const SIG: Record<ScanSignal, string> = {
+  BUY:   'bg-[#C9F028]/12 text-[#C9F028] border-[#C9F028]/25',
+  HOLD:  'bg-white/5 text-[#8888a8] border-white/10',
+  WATCH: 'bg-[#f97316]/10 text-[#f97316] border-[#f97316]/25',
+  SELL:  'bg-red-500/10 text-red-400 border-red-500/25',
+}
+
+type ScanRow = typeof SCAN_BASE[0] & { updated: boolean }
+
+function LiveScannerPreview() {
+  const [rows, setRows] = useState<ScanRow[]>(SCAN_BASE.map(r => ({ ...r, updated: false })))
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setRows(prev => prev.map(row => {
+        if (Math.random() > 0.35) return { ...row, updated: false }
+        const delta = (Math.random() - 0.48) * row.price * 0.004
+        return { ...row, price: Math.max(0.01, row.price + delta), changePct: row.changePct + (Math.random() - 0.5) * 0.3, updated: true }
+      }))
+    }, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-white/8">
+      <div className="grid grid-cols-4 px-4 py-2 border-b border-white/5 bg-white/2">
+        {['Ticker', 'Price', 'Change', 'Signal'].map(h => (
+          <span key={h} className="text-[10px] font-semibold uppercase tracking-widest text-[#55556a]">{h}</span>
+        ))}
+      </div>
+      <div className="divide-y divide-white/4">
+        {rows.map(row => {
+          const up = row.changePct >= 0
+          return (
+            <motion.div
+              key={row.ticker}
+              animate={row.updated ? { backgroundColor: ['rgba(201,240,40,0.04)', 'rgba(0,0,0,0)'] } : {}}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-4 px-4 py-2.5 items-center"
+            >
+              <span className="text-sm font-mono font-bold text-[#f0f0f8]">{row.ticker}</span>
+              <span className="text-sm font-mono text-[#f0f0f8]">${row.price.toFixed(2)}</span>
+              <span className={`text-sm font-mono flex items-center gap-1 ${up ? 'text-[#C9F028]' : 'text-red-400'}`}>
+                {up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
+                {up ? '+' : ''}{row.changePct.toFixed(2)}%
+              </span>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border w-fit ${SIG[row.signal]}`}>{row.signal}</span>
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+const TOOL_CATS = [
+  { id: 'portfolio', label: 'Portfolio', color: '#C9F028', icon: BarChart3, tools: ['get_portfolio', 'get_positions', 'get_cash', 'get_total_return', 'get_portfolio_history', 'get_dividends', 'get_watchlist', 'add_to_watchlist', 'get_position'] },
+  { id: 'market',    label: 'Market',    color: '#00d4ff', icon: Globe,     tools: ['get_quote', 'get_quotes', 'search_stocks', 'get_fundamentals', 'get_news', 'get_top_movers', 'get_market_hours', 'get_sector_performance', 'get_earnings_calendar'] },
+  { id: 'orders',    label: 'Orders',    color: '#7b61ff', icon: Zap,       tools: ['place_buy_order', 'place_sell_order', 'cancel_order', 'get_order_history', 'get_open_orders'] },
+  { id: 'options',   label: 'Options',   color: '#f97316', icon: Activity,  tools: ['get_options_chain', 'get_options_positions', 'place_options_order', 'get_implied_volatility'] },
+  { id: 'crypto',    label: 'Crypto',    color: '#a78bfa', icon: RefreshCw, tools: ['get_crypto_quote', 'buy_crypto', 'sell_crypto', 'get_crypto_positions'] },
+  { id: 'data',      label: 'Data',      color: '#34d399', icon: BookOpen,  tools: ['get_historical_data', 'get_technical_indicators', 'get_analyst_ratings', 'get_institutional_holdings', 'get_short_interest', 'get_insider_trades'] },
+  { id: 'account',   label: 'Account',   color: '#f43f5e', icon: Shield,    tools: ['get_account_info', 'get_tax_documents', 'get_notifications', 'get_transfer_history'] },
+]
+
+function ToolBrowserPreview() {
+  const [active, setActive] = useState(0)
+  const cat = TOOL_CATS[active]
+
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap gap-1.5">
+        {TOOL_CATS.map((c, i) => {
+          const Icon = c.icon
+          return (
+            <button
+              key={c.id}
+              onClick={() => setActive(i)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all"
+              style={active === i
+                ? { background: `${c.color}15`, borderColor: `${c.color}40`, color: c.color }
+                : { background: 'rgba(255,255,255,0.03)', borderColor: 'rgba(255,255,255,0.07)', color: '#55556a' }
+              }
+            >
+              <Icon size={11} />
+              {c.label}
+            </button>
+          )
+        })}
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={cat.id}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.15 }}
+          className="rounded-xl border border-white/8 overflow-hidden"
+        >
+          <div className="px-3 py-2 border-b border-white/5 bg-white/2 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: cat.color }} />
+            <span className="text-[10px] font-mono text-[#55556a]">{cat.tools.length} tools in {cat.label}</span>
+          </div>
+          <div className="divide-y divide-white/4">
+            {cat.tools.slice(0, 5).map(name => (
+              <div key={name} className="px-3 py-2 flex items-center gap-2 hover:bg-white/2 transition-colors">
+                <code className="text-xs font-mono" style={{ color: cat.color }}>{name}</code>
+              </div>
+            ))}
+            {cat.tools.length > 5 && (
+              <div className="px-3 py-2">
+                <span className="text-[10px] text-[#55556a] font-mono">+{cat.tools.length - 5} more</span>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function ProductPreview() {
+  const [tab, setTab] = useState<'scanner' | 'tools' | 'terminal'>('scanner')
+
+  const TABS = [
+    { id: 'scanner',  label: 'Live Scanner' },
+    { id: 'tools',    label: 'MCP Tools' },
+    { id: 'terminal', label: 'Agent Terminal' },
+  ] as const
+
+  return (
+    <div className="glass rounded-2xl border border-white/8 overflow-hidden">
+      {/* Tab bar */}
+      <div className="flex items-center border-b border-white/8 bg-white/2 px-4 gap-0">
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`py-3 px-4 text-xs font-medium border-b-2 transition-all ${
+              tab === t.id
+                ? 'border-[#C9F028] text-[#C9F028]'
+                : 'border-transparent text-[#55556a] hover:text-[#8888a8]'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+        <div className="ml-auto flex items-center gap-1.5 pr-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
+          <span className="text-[10px] font-mono text-[#C9F028]">live</span>
+        </div>
+      </div>
+
+      {/* Tab content */}
+      <div className="p-4">
+        <AnimatePresence mode="wait">
+          {tab === 'scanner' && (
+            <motion.div key="scanner" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+              <LiveScannerPreview />
+            </motion.div>
+          )}
+          {tab === 'tools' && (
+            <motion.div key="tools" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+              <ToolBrowserPreview />
+            </motion.div>
+          )}
+          {tab === 'terminal' && (
+            <motion.div key="terminal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+              <TerminalDemo />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="px-4 pb-4 pt-0">
+        <Link
+          to="/demo"
+          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-white/8 text-xs text-[#8888a8] hover:border-[#C9F028]/25 hover:text-[#C9F028] transition-all"
+        >
+          Open full interactive demo
+          <ChevronRight size={13} />
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Stats ───────────────────────────────────────────────────────────── */
 const STATS = [
   { to: 50, suffix: '+', label: 'MCP Tools', Icon: Terminal },
   { to: 70, suffix: '+', label: 'Async Methods', Icon: Zap },
-  { to: 4, suffix: '', label: 'AI Platforms', Icon: Cpu },
-  { to: 0, suffix: 'ms', label: 'Auth Delay', Icon: Shield },
+  { to: 4,  suffix: '',  label: 'AI Platforms', Icon: Cpu },
+  { to: 0,  suffix: 'ms', label: 'Auth Delay',  Icon: Shield },
 ]
 
 /* ─── Main ─────────────────────────────────────────────────────────────  */
@@ -337,7 +475,6 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const { scrollY } = useScroll()
   const heroY = useTransform(scrollY, [0, 600], [0, -70])
-  const [hovered, setHovered] = useState<number | null>(null)
 
   return (
     <>
@@ -353,15 +490,12 @@ export default function Home() {
       </Helmet>
       <div className="relative">
 
-      {/* ── Hero ── */}
+      {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden" ref={heroRef}>
         {/* Live candlestick chart, pointer-events-none, no interaction blocking */}
         <CandlestickCanvas />
-
-        {/* Subtle dark vignette so text is legible over chart */}
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 70% 80% at 30% 50%, rgba(5,5,8,0.55) 0%, rgba(5,5,8,0.88) 100%)' }} />
-        {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, transparent, #050508)' }} />
 
@@ -433,7 +567,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Stats: terminal readout style */}
+      {/* Stats */}
       <section className="py-14 relative border-y border-white/4">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -456,65 +590,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Features ── */}
-      <section className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Product Preview */}
+      <section className="py-20 relative">
+        <div className="absolute inset-0 grid-pattern opacity-15 pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#f0f0f8] mb-4">
-              Everything an agent needs.<br />
-              <span className="gradient-text-green">Nothing it doesn't.</span>
+            className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 glass-green rounded-full px-4 py-1.5 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
+              <span className="text-xs font-mono text-[#C9F028]">Live product</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#f0f0f8] mb-3">
+              See it in action
             </h2>
-            <p className="text-[#8888a8] max-w-lg mx-auto text-sm">
-              Designed for programmatic consumption. Every tool is typed, every session is self-healing.
+            <p className="text-[#8888a8] max-w-md mx-auto text-sm">
+              Real-time market scanner, full MCP tool browser, and live agent terminal. No login required.
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.map((f, i) => (
-              <motion.div key={f.title}
-                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-                onHoverStart={() => setHovered(i)} onHoverEnd={() => setHovered(null)}
-                className="glass rounded-2xl p-6 border cursor-default relative overflow-hidden transition-colors"
-                style={{ borderColor: hovered === i ? `${f.color}28` : 'rgba(255,255,255,0.05)' }}>
-                <AnimatePresence>
-                  {hovered === i && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      className="absolute inset-0 pointer-events-none"
-                      style={{ background: `radial-gradient(ellipse at 20% 20%, ${f.color}09, transparent 70%)` }} />
-                  )}
-                </AnimatePresence>
-                <motion.div animate={{ scale: hovered === i ? 1.12 : 1 }} transition={{ type: 'spring', stiffness: 300 }}
-                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: `${f.color}12` }}>
-                  <f.icon size={20} style={{ color: f.color }} />
-                </motion.div>
-                <h3 className="font-semibold text-[#f0f0f8] mb-2">{f.title}</h3>
-                <p className="text-sm text-[#8888a8] leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+            <ProductPreview />
+          </motion.div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-28 relative overflow-hidden">
+      {/* CTA */}
+      <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#C9F028]/2 to-transparent pointer-events-none" />
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="relative max-w-3xl mx-auto px-4 text-center">
-          <div className="glass rounded-3xl p-12 border border-[#C9F028]/12">
-            <div className="inline-flex items-center gap-2 glass-green rounded-full px-3 py-1 mb-6">
+          className="relative max-w-2xl mx-auto px-4 text-center">
+          <div className="glass rounded-3xl p-10 border border-[#C9F028]/12">
+            <div className="inline-flex items-center gap-2 glass-green rounded-full px-3 py-1 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
               <span className="text-[11px] font-mono text-[#C9F028]">Open Source · MIT License</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#f0f0f8] mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#f0f0f8] mb-3">
               Ready to give your agent an edge?
             </h2>
-            <p className="text-[#8888a8] mb-10 leading-relaxed max-w-lg mx-auto">
-              Connect your wallet or sign in to access the full HOODSCAN platform. Your agent gets 50 live MCP tools on first run.
+            <p className="text-[#8888a8] mb-8 text-sm leading-relaxed max-w-md mx-auto">
+              Connect your wallet and get 50+ live MCP tools on first run.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/login" className="btn-primary flex items-center justify-center gap-2 text-base py-3.5 px-8 group">
                 Launch App
                 <ArrowRight size={17} className="group-hover:translate-x-1 transition-transform" />
@@ -528,7 +644,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-    </div>
+      </div>
     </>
   )
 }

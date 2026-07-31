@@ -57,6 +57,11 @@ jobs:
             echo "✅ dist/$dir/index.html — $title"
           }
 
+          make_page "features" \
+            "Features | HOODSCAN AI Trading Intelligence" \
+            "HOODSCAN features: 50+ MCP tools, multi-agent support, options intelligence, self-renewing sessions, portfolio scanner, and secure token storage." \
+            "https://hoodscan.world/features"
+
           make_page "about" \
             "About HOODSCAN | AI-Native Trading Intelligence Platform" \
             "Learn about HOODSCAN — open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, 50+ MCP tools." \
