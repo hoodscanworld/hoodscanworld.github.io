@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
@@ -339,7 +340,18 @@ export default function Home() {
   const [hovered, setHovered] = useState<number | null>(null)
 
   return (
-    <div className="relative">
+    <>
+      <Helmet>
+        <title>HOODSCAN - AI-Native Trading Intelligence</title>
+        <meta name="description" content="HOODSCAN: 50+ MCP tools for autonomous AI agents to trade, scan markets, and manage portfolios on Robinhood. Real-time market scanning and wallet-native authentication." />
+        <link rel="canonical" href="https://hoodscan.world/" />
+        <meta property="og:title" content="HOODSCAN - AI-Native Trading Intelligence" />
+        <meta property="og:description" content="HOODSCAN: 50+ MCP tools for autonomous AI agents to trade, scan markets, and manage portfolios on Robinhood. Real-time market scanning and wallet-native authentication." />
+        <meta property="og:url" content="https://hoodscan.world/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hoodscan.world/og-image.png" />
+      </Helmet>
+      <div className="relative">
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden" ref={heroRef}>
@@ -517,5 +529,6 @@ export default function Home() {
       </section>
 
     </div>
+    </>
   )
 }

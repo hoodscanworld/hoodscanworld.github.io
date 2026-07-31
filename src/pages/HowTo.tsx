@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
@@ -280,6 +281,17 @@ export default function HowTo() {
   }, [active])
 
   return (
+    <>
+      <Helmet>
+        <title>How to Use HOODSCAN | MCP Tools Setup Guide</title>
+        <meta name="description" content="Step-by-step guide to install and configure HOODSCAN MCP tools for your AI agent. Works with Claude Code, Codex, and any MCP-compatible autonomous agent." />
+        <link rel="canonical" href="https://hoodscan.world/how-to" />
+        <meta property="og:title" content="How to Use HOODSCAN | MCP Tools Setup Guide" />
+        <meta property="og:description" content="Step-by-step guide to install and configure HOODSCAN MCP tools for your AI agent. Works with Claude Code, Codex, and any MCP-compatible autonomous agent." />
+        <meta property="og:url" content="https://hoodscan.world/how-to" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hoodscan.world/og-image.png" />
+      </Helmet>
     <div className="min-h-screen pt-16 relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-25 pointer-events-none" />
       <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.025] blur-[120px] pointer-events-none" />
@@ -447,5 +459,6 @@ export default function HowTo() {
         </motion.div>
       </section>
     </div>
+    </>
   )
 }

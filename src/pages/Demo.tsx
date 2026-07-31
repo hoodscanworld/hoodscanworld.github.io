@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -372,6 +373,17 @@ export default function Demo() {
   }
 
   return (
+    <>
+      <Helmet>
+        <title>Live Demo | HOODSCAN 50+ MCP Tools Explorer</title>
+        <meta name="description" content="Explore all 50+ HOODSCAN MCP tools interactively. Live demo of portfolio management, real-time market scanning, options trading, and crypto tools for AI agents." />
+        <link rel="canonical" href="https://hoodscan.world/demo" />
+        <meta property="og:title" content="Live Demo | HOODSCAN 50+ MCP Tools Explorer" />
+        <meta property="og:description" content="Explore all 50+ HOODSCAN MCP tools interactively. Live demo of portfolio management, real-time market scanning, options trading, and crypto tools for AI agents." />
+        <meta property="og:url" content="https://hoodscan.world/demo" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hoodscan.world/og-image.png" />
+      </Helmet>
     <div className="min-h-screen pt-16">
       {/* ── Hero ───────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden py-16 sm:py-20">
@@ -796,5 +808,6 @@ export default function Demo() {
         </AnimatePresence>
       </div>
     </div>
+    </>
   )
 }

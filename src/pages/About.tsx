@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -91,7 +92,18 @@ export default function About() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen pt-16 relative overflow-hidden">
+    <>
+      <Helmet>
+        <title>About HOODSCAN | AI-Native Trading Intelligence Platform</title>
+        <meta name="description" content="Learn about HOODSCAN — the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
+        <link rel="canonical" href="https://hoodscan.world/about" />
+        <meta property="og:title" content="About HOODSCAN | AI-Native Trading Intelligence Platform" />
+        <meta property="og:description" content="Learn about HOODSCAN — the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
+        <meta property="og:url" content="https://hoodscan.world/about" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hoodscan.world/og-image.png" />
+      </Helmet>
+      <div className="min-h-screen pt-16 relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-25 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.02] blur-[140px] pointer-events-none" />
 
@@ -348,5 +360,6 @@ export default function About() {
         </motion.div>
       </section>
     </div>
+    </>
   )
 }

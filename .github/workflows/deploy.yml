@@ -27,13 +27,60 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build
 
       - name: Add .nojekyll
         run: touch dist/.nojekyll
+
+      - name: Generate per-route HTML with correct SEO meta tags
+        run: |
+          BASE=$(cat dist/index.html)
+
+          make_page() {
+            local dir="$1"
+            local title="$2"
+            local desc="$3"
+            local canonical="$4"
+
+            mkdir -p "dist/$dir"
+            echo "$BASE" \
+              | sed "s|<title>.*</title>|<title>$title</title>|g" \
+              | sed "s|<meta name=\"description\" content=\"[^\"]*\"|<meta name=\"description\" content=\"$desc\"|g" \
+              | sed "s|<link rel=\"canonical\" href=\"[^\"]*\"|<link rel=\"canonical\" href=\"$canonical\"|g" \
+              | sed "s|content=\"https://hoodscan.world/\" />|content=\"$canonical\" />|g" \
+              | sed "s|<meta property=\"og:title\" content=\"[^\"]*\"|<meta property=\"og:title\" content=\"$title\"|g" \
+              | sed "s|<meta property=\"og:description\" content=\"[^\"]*\"|<meta property=\"og:description\" content=\"$desc\"|g" \
+              > "dist/$dir/index.html"
+            echo "✅ dist/$dir/index.html — $title"
+          }
+
+          make_page "about" \
+            "About HOODSCAN | AI-Native Trading Intelligence Platform" \
+            "Learn about HOODSCAN — open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, 50+ MCP tools." \
+            "https://hoodscan.world/about"
+
+          make_page "how-to" \
+            "How to Use HOODSCAN | MCP Tools Setup Guide" \
+            "Step-by-step guide to install and configure HOODSCAN MCP tools for AI agents. Works with Claude Code, Codex, and any MCP-compatible autonomous agent." \
+            "https://hoodscan.world/how-to"
+
+          make_page "demo" \
+            "Live Demo | HOODSCAN 50+ MCP Tools Explorer" \
+            "Explore all 50+ HOODSCAN MCP tools interactively. Live demo of portfolio management, real-time market scanning, options trading, and crypto tools." \
+            "https://hoodscan.world/demo"
+
+          make_page "cookies" \
+            "Cookie Policy | HOODSCAN" \
+            "HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Transparent cookie policy for our AI trading platform." \
+            "https://hoodscan.world/cookies"
+
+          make_page "login" \
+            "Sign In | HOODSCAN" \
+            "Sign in to HOODSCAN with your crypto wallet or email. Wallet-native authentication with MetaMask and Phantom support." \
+            "https://hoodscan.world/login"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

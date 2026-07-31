@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Cookie, Shield, BarChart3, Settings, Mail, ArrowRight, ChevronRight } from 'lucide-react'
@@ -48,7 +49,18 @@ const SECTIONS = [
 
 export default function Cookies() {
   return (
-    <div className="min-h-screen pt-16 relative overflow-hidden">
+    <>
+      <Helmet>
+        <title>Cookie Policy | HOODSCAN</title>
+        <meta name="description" content="HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Read our transparent cookie policy." />
+        <link rel="canonical" href="https://hoodscan.world/cookies" />
+        <meta property="og:title" content="Cookie Policy | HOODSCAN" />
+        <meta property="og:description" content="HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Read our transparent cookie policy." />
+        <meta property="og:url" content="https://hoodscan.world/cookies" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://hoodscan.world/og-image.png" />
+      </Helmet>
+      <div className="min-h-screen pt-16 relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
       <div className="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full bg-[#7b61ff] opacity-[0.02] blur-[120px] pointer-events-none" />
 
@@ -182,5 +194,6 @@ export default function Cookies() {
         </div>
       </div>
     </div>
+    </>
   )
 }
