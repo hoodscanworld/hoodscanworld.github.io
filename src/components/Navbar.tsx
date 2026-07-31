@@ -7,6 +7,7 @@ import Logo from './Logo'
 const navLinks = [
   { label: 'How It Works', to: '/how-to' },
   { label: 'About', to: '/about' },
+  { label: 'Demo', to: '/demo' },
 ]
 
 export default function Navbar() {
