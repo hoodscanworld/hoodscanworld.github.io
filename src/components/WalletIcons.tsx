@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────
-   Wallet icon components — faithful SVG reproductions of the official
+   Wallet icon components: faithful SVG reproductions of the official
    MetaMask fox and Phantom ghost brand assets.
    MetaMask SVG © ConsenSys / MetaMask (MIT-compatible brand use).
    Phantom SVG © Phantom Technologies (fair-use brand reference).
@@ -129,7 +129,7 @@ export function PhantomIcon({ size = 36 }: { size?: number }) {
       {/* Background */}
       <rect width="128" height="128" rx="26" fill="url(#phantom-bg)"/>
 
-      {/* Ghost body — rounded top head, 3 prong bottom */}
+      {/* Ghost body: rounded top head, 3 prong bottom */}
       <path fill="white"
         d="
           M 64 18
@@ -148,11 +148,11 @@ export function PhantomIcon({ size = 36 }: { size?: number }) {
         "
       />
 
-      {/* Left eye — dark oval with white glint */}
+      {/* Left eye: dark oval with white glint */}
       <ellipse fill="#534BB1" cx="46" cy="65" rx="11" ry="13"/>
       <ellipse fill="white"   cx="49" cy="61" rx="4"  ry="5"/>
 
-      {/* Right eye — dark oval with white glint */}
+      {/* Right eye: dark oval with white glint */}
       <ellipse fill="#534BB1" cx="82" cy="65" rx="11" ry="13"/>
       <ellipse fill="white"   cx="85" cy="61" rx="4"  ry="5"/>
 

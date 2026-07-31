@@ -87,6 +87,16 @@ jobs:
             "Sign in to HOODSCAN with your crypto wallet or email. Wallet-native authentication with MetaMask and Phantom support." \
             "https://hoodscan.world/login"
 
+          make_page "privacy" \
+            "Privacy Policy | HOODSCAN" \
+            "HOODSCAN Privacy Policy: no server-side data storage, no analytics, no advertising. Learn how we handle your wallet address and session data." \
+            "https://hoodscan.world/privacy"
+
+          make_page "terms" \
+            "Terms of Service | HOODSCAN" \
+            "HOODSCAN Terms of Service: open-source MIT-licensed trading intelligence. Financial risk disclaimer, acceptable use, and limitation of liability." \
+            "https://hoodscan.world/terms"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

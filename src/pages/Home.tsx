@@ -6,7 +6,7 @@ import { ArrowRight, Zap, Shield, Brain, Terminal, Globe, Lock, TrendingUp, Chev
 
 /* ─── Candlestick Chart Background ─────────────────────────────────────
    A live-scrolling OHLC candlestick chart with EMA line, volume bars,
-   a scanning beam and price labels — directly themed to HOODSCAN's
+   a scanning beam and price labels, directly themed to HOODSCAN's
    core purpose: AI-native trading intelligence.
 ────────────────────────────────────────────────────────────────────── */
 type Candle = { open: number; high: number; low: number; close: number; vol: number }
@@ -45,7 +45,7 @@ function CandlestickCanvas() {
     let raf = 0
     let t = 0
 
-    // Generate 280 candles — we show a sliding window
+    // Generate 280 candles; we show a sliding window
     const ALL = genCandles(280)
     let offset = 0       // first visible candle index (float for smooth scroll)
     const VISIBLE = 70   // number of candles visible at once
@@ -315,7 +315,7 @@ function TerminalDemo() {
 
 /* ─── Feature cards ────────────────────────────────────────────────────  */
 const FEATURES = [
-  { icon: Terminal, title: '50 MCP Tools', desc: 'Full market access from any MCP-compatible agent. Place orders, scan options chains, stream live quotes — all via typed function calls.', color: '#C9F028' },
+  { icon: Terminal, title: '50 MCP Tools', desc: 'Full market access from any MCP-compatible agent. Place orders, scan options chains, stream live quotes, all via typed function calls.', color: '#C9F028' },
   { icon: Brain, title: 'Multi-Agent Ready', desc: 'Native support for Claude Code, Codex, OpenClaw, and any standard MCP client. One install, every agent, zero re-configuration.', color: '#7b61ff' },
   { icon: TrendingUp, title: 'Options Intelligence', desc: 'Full options chain scanning, Greeks analysis, and multi-leg order construction. AI-native contract selection with IV and delta filters.', color: '#00d4ff' },
   { icon: Shield, title: 'Self-Renewing Sessions', desc: 'Tokens refresh proactively before expiry and auto-recover on 401. Your agent never hits a re-auth wall mid-strategy.', color: '#C9F028' },
@@ -355,7 +355,7 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden" ref={heroRef}>
-        {/* Live candlestick chart — pointer-events-none, no interaction blocking */}
+        {/* Live candlestick chart, pointer-events-none, no interaction blocking */}
         <CandlestickCanvas />
 
         {/* Subtle dark vignette so text is legible over chart */}
@@ -390,7 +390,7 @@ export default function Home() {
 
               <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
                 className="text-[#8888a8] text-base leading-relaxed mb-10 max-w-md">
-                HOODSCAN connects any MCP-compatible AI agent directly to Robinhood — 50+ typed tools, real-time market data, options intelligence, and self-renewing auth. One install. Every agent.
+                HOODSCAN connects any MCP-compatible AI agent directly to Robinhood: 50+ typed tools, real-time market data, options intelligence, and self-renewing auth. One install. Every agent.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
@@ -416,7 +416,7 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right — Terminal */}
+            {/* Right: Terminal */}
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25, duration: 0.7 }}>
               <TerminalDemo />
             </motion.div>
@@ -433,7 +433,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── Stats — terminal readout style ── */}
+      {/* Stats: terminal readout style */}
       <section className="py-14 relative border-y border-white/4">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">

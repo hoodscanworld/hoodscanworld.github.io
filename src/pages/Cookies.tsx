@@ -31,7 +31,7 @@ const SECTIONS = [
     icon: Settings,
     color: '#00d4ff',
     title: 'Your choices',
-    body: 'Because we only use strictly necessary cookies, there is no opt-out mechanism — removing them would prevent the site from working. You can clear all cookies at any time via your browser settings. Doing so will sign you out of HOODSCAN.',
+    body: 'Because we only use strictly necessary cookies, there is no opt-out mechanism, since removing them would prevent the site from working. You can clear all cookies at any time via your browser settings. Doing so will sign you out of HOODSCAN.',
   },
   {
     icon: Cookie,
@@ -52,10 +52,10 @@ export default function Cookies() {
     <>
       <Helmet>
         <title>Cookie Policy | HOODSCAN</title>
-        <meta name="description" content="HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Read our transparent cookie policy." />
+        <meta name="description" content="HOODSCAN uses only essential cookies: no tracking, no analytics, no advertising. Read our transparent cookie policy." />
         <link rel="canonical" href="https://hoodscan.world/cookies" />
         <meta property="og:title" content="Cookie Policy | HOODSCAN" />
-        <meta property="og:description" content="HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Read our transparent cookie policy." />
+        <meta property="og:description" content="HOODSCAN uses only essential cookies: no tracking, no analytics, no advertising. Read our transparent cookie policy." />
         <meta property="og:url" content="https://hoodscan.world/cookies" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://hoodscan.world/og-image.png" />
@@ -173,7 +173,7 @@ export default function Cookies() {
             <h2 className="text-base font-bold text-[#f0f0f8]">Contact us</h2>
           </div>
           <p className="text-sm text-[#8888a8] leading-relaxed mb-5">
-            Questions about cookies or our privacy practices? Open an issue on GitHub — we read everything.
+            Questions about cookies or our privacy practices? Open an issue on GitHub; we read everything.
           </p>
           <a
             href="https://github.com/hoodscanworld/hoodscanworld.github.io/issues"

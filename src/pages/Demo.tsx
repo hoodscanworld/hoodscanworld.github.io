@@ -117,7 +117,7 @@ const CMD_RESPONSES: Record<string, string[]> = {
   'hoodscan.portfolio.scan()': [
     '⟳ Authenticating session...',
     '⟳ Fetching portfolio snapshot...',
-    '✓ Portfolio loaded — $124,832.14 equity',
+    '✓ Portfolio loaded: $124,832.14 equity',
     '⟳ Scanning 12 positions for signals...',
     '✓ NVDA  +140.4% unrealised  →  HOLD  (RSI 61, trend intact)',
     '✓ AAPL  +12.8% unrealised  →  HOLD  (near resistance $220)',
@@ -331,7 +331,7 @@ export default function Demo() {
   // ── Terminal ──────────────────────────────────────────────────────
   const [termInput, setTermInput] = useState('')
   const [termEntries, setTermEntries] = useState<TerminalEntry[]>([
-    { id: 0, type: 'info', text: 'HOODSCAN MCP Terminal v2.0 — Type a command or click a preset above.' },
+    { id: 0, type: 'info', text: 'HOODSCAN MCP Terminal v2.0. Type a command or click a preset above.' },
     { id: 1, type: 'info', text: 'Session authenticated. 50 tools loaded. Ready.\n' },
   ])
   const [termBusy, setTermBusy] = useState(false)
@@ -409,7 +409,7 @@ export default function Demo() {
             <span className="block gradient-text-green">in Action</span>
           </h1>
           <p className="text-[#8888a8] text-lg max-w-2xl mx-auto mb-10">
-            Interact with the full MCP toolkit live — market scanner, 50 AI tools, and the agent terminal.
+            Interact with the full MCP toolkit live: market scanner, 50 AI tools, and the agent terminal.
             No login required.
           </p>
 
@@ -749,7 +749,7 @@ export default function Demo() {
                     <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                     <div className="w-3 h-3 rounded-full bg-[#C9F028]/50" />
                   </div>
-                  <span className="ml-2 text-xs font-mono text-[#55556a]">hoodscan.mcp — agent terminal</span>
+                  <span className="ml-2 text-xs font-mono text-[#55556a]">hoodscan.mcp / agent terminal</span>
                   <div className="ml-auto flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C9F028] pulse-dot" />
                     <span className="text-xs font-mono text-[#C9F028]">connected</span>

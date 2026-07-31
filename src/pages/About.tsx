@@ -34,7 +34,7 @@ const VALUES = [
 const TIMELINE = [
   {
     year: 'Jul 2026',
-    label: 'HOODSCAN v2.0 — Now Live',
+    label: 'HOODSCAN v2.0: Now Live',
     desc: 'Full interactive web dashboard, wallet-native authentication (MetaMask & Phantom), animated platform upgrade, and 50+ MCP tools fully stable in production.',
     color: '#C9F028',
     current: true,
@@ -95,10 +95,10 @@ export default function About() {
     <>
       <Helmet>
         <title>About HOODSCAN | AI-Native Trading Intelligence Platform</title>
-        <meta name="description" content="Learn about HOODSCAN — the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
+        <meta name="description" content="Learn about HOODSCAN, the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
         <link rel="canonical" href="https://hoodscan.world/about" />
         <meta property="og:title" content="About HOODSCAN | AI-Native Trading Intelligence Platform" />
-        <meta property="og:description" content="Learn about HOODSCAN — the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
+        <meta property="og:description" content="Learn about HOODSCAN, the open-source AI trading platform built for autonomous agents. MIT licensed, agent-first architecture, wallet-native authentication." />
         <meta property="og:url" content="https://hoodscan.world/about" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://hoodscan.world/og-image.png" />
@@ -123,7 +123,7 @@ export default function About() {
             <span className="gradient-text-green">built for agents, not dashboards.</span>
           </h1>
           <p className="text-base sm:text-lg text-[#8888a8] max-w-2xl mx-auto leading-relaxed">
-            HOODSCAN started as a technical answer to a simple question: why can't an AI agent just trade? Not via bloated middleware, not via screen scraping — via a clean, typed, self-authenticating API that any MCP-compatible agent can call in milliseconds.
+            HOODSCAN started as a technical answer to a simple question: why can't an AI agent just trade? Not via bloated middleware, not via screen scraping, but via a clean, typed, self-authenticating API that any MCP-compatible agent can call in milliseconds.
           </p>
         </motion.div>
       </section>
@@ -148,7 +148,7 @@ export default function About() {
           </div>
           <div className="space-y-4 text-[#8888a8] text-sm leading-relaxed">
             <p>
-              The proliferation of capable AI agents has outpaced the tooling available to them. Most trading APIs are built for human dashboards — rate-limited, session-brittle, and hostile to programmatic access. HOODSCAN is the opposite: a purpose-built machine interface.
+              The proliferation of capable AI agents has outpaced the tooling available to them. Most trading APIs are built for human dashboards: rate-limited, session-brittle, and hostile to programmatic access. HOODSCAN is the opposite: a purpose-built machine interface.
             </p>
             <p>
               Every design decision optimizes for agent reliability: proactive token refresh so sessions never expire mid-trade, typed responses so agents never parse ambiguous output, and a pluggable credential store so the same codebase works in a developer laptop keychain and a headless Docker container.

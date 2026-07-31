@@ -148,7 +148,7 @@ const AGENT_LOG = [
   { ts: '14:31:38', level: 'info', msg: '847 option contracts loaded' },
   { ts: '14:30:12', level: 'exec', msg: 'robinhood_get_portfolio() → equity: $124,832.40' },
   { ts: '14:29:55', level: 'info', msg: 'Agent session initialized via MetaMask' },
-  { ts: '14:29:42', level: 'info', msg: 'MCP server connected — 50 tools active' },
+  { ts: '14:29:42', level: 'info', msg: 'MCP server connected: 50 tools active' },
 ]
 
 type Tab = 'portfolio' | 'tools' | 'terminal'

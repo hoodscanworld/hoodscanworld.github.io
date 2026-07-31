@@ -5,14 +5,18 @@ import Logo from './Logo'
 const footerLinks = {
   Product: [
     { label: 'How It Works', to: '/how-to' },
+    { label: 'Demo', to: '/demo' },
     { label: 'Dashboard', to: '/dashboard' },
     { label: 'Launch App', to: '/login' },
   ],
   Company: [
     { label: 'About', to: '/about' },
+    { label: 'FAQ', to: '/faq' },
     { label: 'GitHub', href: 'https://github.com/hoodscanworld/hoodscanworld.github.io', external: true },
   ],
   Legal: [
+    { label: 'Terms of Service', to: '/terms' },
+    { label: 'Privacy Policy', to: '/privacy' },
     { label: 'Cookie Policy', to: '/cookies' },
   ],
 }
@@ -30,7 +34,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Logo size="sm" />
             <p className="mt-4 text-sm text-[#8888a8] leading-relaxed max-w-xs">
-              The AI-native trading intelligence layer. 50 MCP tools, real-time market scanning, autonomous portfolio management.
+              The AI-native trading intelligence layer. 50+ MCP tools, real-time market scanning, autonomous portfolio management.
             </p>
             <div className="flex items-center gap-3 mt-5">
               {socials.map(s => (

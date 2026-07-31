@@ -10,6 +10,9 @@ import HowTo from './pages/HowTo'
 import Cookies from './pages/Cookies'
 import Demo from './pages/Demo'
 import FAQ from './pages/FAQ'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import Terms from './pages/Terms'
+import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 
@@ -28,6 +31,8 @@ export default function App() {
             <Route path="/demo" element={<Demo />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/cookies" element={<Cookies />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route
               path="/dashboard"
               element={
@@ -36,7 +41,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />
