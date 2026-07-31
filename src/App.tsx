@@ -9,6 +9,7 @@ import About from './pages/About'
 import HowTo from './pages/HowTo'
 import Cookies from './pages/Cookies'
 import Demo from './pages/Demo'
+import FAQ from './pages/FAQ'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/how-to" element={<HowTo />} />
             <Route path="/demo" element={<Demo />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route
               path="/dashboard"

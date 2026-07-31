@@ -77,6 +77,11 @@ jobs:
             "HOODSCAN uses only essential cookies — no tracking, no analytics, no advertising. Transparent cookie policy for our AI trading platform." \
             "https://hoodscan.world/cookies"
 
+          make_page "faq" \
+            "FAQ | HOODSCAN AI Trading Intelligence" \
+            "Frequently asked questions about HOODSCAN: security, supported AI agents, MCP tools, options trading, crypto, and the open-source roadmap." \
+            "https://hoodscan.world/faq"
+
           make_page "login" \
             "Sign In | HOODSCAN" \
             "Sign in to HOODSCAN with your crypto wallet or email. Wallet-native authentication with MetaMask and Phantom support." \
