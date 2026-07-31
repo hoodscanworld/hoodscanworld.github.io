@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Eye, EyeOff, AlertCircle, ArrowRight, Wallet, Mail, Shield, Zap } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/Logo'
+import { MetaMaskIcon, PhantomIcon } from '../components/WalletIcons'
 
 /* ─── Market Data Rain Canvas ───────────────────────────────────────────
    Bloomberg-terminal style: columns of tickers, prices and % changes
@@ -105,33 +106,6 @@ function MarketDataCanvas() {
   }, [])
 
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" />
-}
-
-/* ─── Wallet icons ──────────────────────────────────────────────────── */
-function MetaMaskIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 35 33" fill="none">
-      <polygon points="32.9582,1 19.8241,10.7183 22.2665,4.99099" fill="#E17726" stroke="#E17726" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="2.04858,1 15.0707,10.809 12.7396,4.99099" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="28.2263,23.5334 24.6498,29.3838 32.2567,31.5162 34.4898,23.6526" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="0.522827,23.6526 2.74357,31.5162 10.3397,29.3838 6.77472,23.5334" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="9.93715,14.5867 7.77186,17.8513 15.1815,18.1885 14.9285,10.2097" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="25.0695,14.5867 20.0541,10.1211 19.9133,18.1885 27.2338,17.8513" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="10.3397,29.3838 14.7227,27.1433 10.9492,23.7119" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-      <polygon points="20.2833,27.1433 24.6498,29.3838 24.0574,23.7119" fill="#E27625" stroke="#E27625" strokeWidth="0.25" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function PhantomIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 128 128" fill="none">
-      <rect width="128" height="128" rx="28" fill="#ab9ff2" />
-      <path d="M110.584 64.993c0 29.529-23.956 53.485-53.485 53.485H36.31c-5.77 0-10.45-4.68-10.45-10.45V77.24c0-26.184 21.23-47.413 47.413-47.413 26.184 0 37.31 9.617 37.31 35.166z" fill="white" />
-      <ellipse cx="80" cy="60" rx="7" ry="7" fill="#ab9ff2" />
-      <ellipse cx="50" cy="60" rx="7" ry="7" fill="#ab9ff2" />
-    </svg>
-  )
 }
 
 type Tab = 'email' | 'wallet'
@@ -254,7 +228,7 @@ export default function Login() {
                 <motion.button onClick={handleMetaMask} disabled={!!loading} whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/8 bg-white/2 hover:bg-white/4 hover:border-[#f6851b]/30 transition-all group">
                   <div className="w-10 h-10 rounded-xl bg-[#f6851b]/10 flex items-center justify-center flex-shrink-0">
-                    <MetaMaskIcon />
+                    <MetaMaskIcon size={28} />
                   </div>
                   <div className="flex-1 text-left">
                     <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#f6851b] transition-colors">MetaMask</div>
@@ -269,7 +243,7 @@ export default function Login() {
                 <motion.button onClick={handlePhantom} disabled={!!loading} whileTap={{ scale: 0.98 }}
                   className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/8 bg-white/2 hover:bg-white/4 hover:border-[#ab9ff2]/30 transition-all group">
                   <div className="w-10 h-10 rounded-xl bg-[#ab9ff2]/10 flex items-center justify-center flex-shrink-0">
-                    <PhantomIcon />
+                    <PhantomIcon size={28} />
                   </div>
                   <div className="flex-1 text-left">
                     <div className="text-sm font-semibold text-[#f0f0f8] group-hover:text-[#ab9ff2] transition-colors">Phantom</div>
