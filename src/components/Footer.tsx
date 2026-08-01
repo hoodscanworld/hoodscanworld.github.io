@@ -90,18 +90,6 @@ export default function Footer() {
           <p className="text-xs text-[#55556a]">
             &copy; {new Date().getFullYear()} HOODSCAN. All rights reserved.
           </p>
-          <a
-            href="https://orynth.dev/projects/hoodscan-world"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="https://orynth.dev/api/badge/hoodscan-world?theme=dark&style=default"
-              alt="Featured on Orynth"
-              width={260}
-              height={80}
-            />
-          </a>
           <p className="text-xs text-[#55556a] max-w-sm">
             Not affiliated with Robinhood Markets, Inc. "Robinhood" is a trademark of Robinhood Markets, Inc. Use at your own risk.
           </p>
